@@ -41,6 +41,8 @@ export default function PedoTest(props: any) {
         setPastStepCount(result.steps);
       },
       error => {
+        console.log(start);
+        console.log(end);
         setPastStepCount(-1);
       },
     );
