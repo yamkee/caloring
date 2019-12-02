@@ -31,9 +31,12 @@ interface FormState{
           const updatedValues = {...state.values, [action.id]:action.value};
           const updatedValidities = {...state.validities, [action.id]:action.isValid};
           
+          let count = 0;
           let updatedFormIsValid = true;
           for(const key in updatedValidities){
+            if(count===2) break;
             updatedFormIsValid = updatedFormIsValid && updatedValidities[key]
+            count++;
           }
         return{
           value: updatedValues,
@@ -62,6 +65,10 @@ export default function SignBox(props:any){
       const onChnageInput = useCallback((id:string, value:string, isValid:boolean)=>{
         dispatch({type:FORM_INPUT_UPDATE, id, value, isValid})
       },[dispatch])
+
+      useEffect(()=>{
+        props.getIsValid(formState.formIsValid)
+      },[formState])
 
     return <Box>
         <Text>nickname</Text>
