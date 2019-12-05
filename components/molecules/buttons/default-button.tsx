@@ -11,12 +11,17 @@ interface ButtonProps {
     color?: string
     textColor?: string
     title?: string
+    textStyle?: any
 }
 
 export default (props: ButtonProps) => {
     return (
         <Button onPress={props.onPress} style={props.style}>
-            <Text level={props.level} color={props.textColor}>
+            <Text
+                level={props.level}
+                color={props.textColor}
+                style={props.textStyle}
+            >
                 {props.title}
             </Text>
         </Button>

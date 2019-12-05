@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react'
-import { Picker, View } from 'react-native'
+import { Picker, View, CheckBox } from 'react-native'
 
 import * as Screen from '../../../constants/Dimensions'
 import Colors from '../../../constants/Colors'
 import GenderSelect from '../../molecules/buttons/GenderSelect'
 import SignUpInput from '../Input/SignUpInput'
 import RoundButton from '../../molecules/buttons/round'
+import Button from '../../molecules/buttons/default-button'
+import Text from '../../atoms/Text'
 
 export default (props: any) => {
     const [age, setAge] = useState()
     const [gender, setGender] = useState()
     const [formValid, setFormValid] = useState()
+    const [agree, setAgree] = useState(false)
+
     useEffect(() => {
         console.log(age, gender, formValid)
     }, [age, gender, formValid])
@@ -54,15 +58,47 @@ export default (props: any) => {
                     <Picker.Item label="50대" value={50} />
                 </Picker>
             </View>
+            <View
+                style={{
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginTop: Screen.height * 0.03,
+                    marginBottom: Screen.height * 0.01,
+                }}
+            >
+                <CheckBox
+                    value={agree}
+                    onValueChange={() => {
+                        setAgree(prev => !prev)
+                    }}
+                />
+                <Text>다음 사항에 동의합니다.</Text>
+            </View>
+
+            <Button
+                title="이용약관보기"
+                onPress={() => {}}
+                textStyle={{ textDecorationLine: 'underline' }}
+                style={{
+                    alignSelf: 'center',
+                    marginBottom: Screen.height * 0.03,
+                }}
+            />
+
             <RoundButton
                 title="로그인"
                 onPress={() => {
-                    if (age && gender && formValid) {
+                    if (agree && age && gender && formValid) {
                         props.navigation.navigate('Home')
                     }
                 }}
                 textColor="white"
-                color={age && gender && formValid ? Colors.main : '#cbc9c9'}
+                color={
+                    agree && age && gender && formValid
+                        ? Colors.main
+                        : '#cbc9c9'
+                }
                 width={Screen.width * 0.92}
                 height={Screen.height * 0.06}
             />

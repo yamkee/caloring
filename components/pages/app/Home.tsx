@@ -9,6 +9,7 @@ let subscription: any
 export default function Home(props: any) {
     const [step, setStep] = useState(0)
     const [pastStep, setPastStep] = useState(0)
+    const [time, setTime] = useState(0)
 
     useEffect(() => {
         subscribe()

@@ -82,7 +82,6 @@ export default function SignBox(props: any) {
                 onChange={onChnageInput}
                 value=""
                 placeholder="사용자 이름"
-                isSignIn
             />
             <TextInput
                 id="password"
@@ -90,7 +89,6 @@ export default function SignBox(props: any) {
                 value=""
                 secureTextEntry
                 placeholder="비밀번호"
-                isSignIn
             />
             <RoundButton
                 title="로그인"
