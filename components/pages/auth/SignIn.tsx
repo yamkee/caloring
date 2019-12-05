@@ -1,9 +1,8 @@
-import React, { useState, useReducer, useCallback, useEffect } from 'react'
+import React from 'react'
 import {
     KeyboardAvoidingView,
     Keyboard,
     TouchableWithoutFeedback,
-    View,
 } from 'react-native'
 import styled from 'styled-components/native'
 
@@ -21,13 +20,13 @@ export default function SignIn(props: any) {
             }}
         >
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                <View>
+                <>
                     <Carousel />
                     <SignBox
                         navigation={props.navigation}
                         style={{ marginTop: Screen.height * 0.02 }}
                     />
-                </View>
+                </>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
     )

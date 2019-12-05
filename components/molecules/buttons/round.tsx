@@ -5,19 +5,38 @@ import * as Screen from '../../../constants/Dimensions'
 import Text from '../../atoms/Text'
 import Colors from '../../../constants/Colors'
 
-interface ButtonProps {
+interface IProps {
     onPress: any
     style?: any
     level?: number
     color?: string
     textColor?: string
+    borderColor?: string
     title?: string
+    width: number
+    height: number
 }
 
-export default (props: ButtonProps) => {
+interface ButtonProps {
+    onPress: any
+    style?: any
+    color?: string
+    borderColor?: string
+    width: number
+    height: number
+}
+
+export default (props: IProps) => {
     const { title, onPress } = props
     return (
-        <Button onPress={onPress} style={props.style} color={props.color}>
+        <Button
+            onPress={onPress}
+            style={props.style}
+            color={props.color}
+            width={props.width}
+            height={props.height}
+            borderColor={props.borderColor}
+        >
             <Text color={props.textColor} level={props.level}>
                 {title}
             </Text>
@@ -26,10 +45,12 @@ export default (props: ButtonProps) => {
 }
 
 const Button = styled.TouchableOpacity<ButtonProps>(props => ({
-    width: Screen.width * 0.92,
-    height: Screen.height * 0.06,
-    borderRadius: Screen.height * 0.03,
+    width: props.width,
+    height: props.height,
+    borderRadius: props.height / 2,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: props.color,
+    borderColor: props.borderColor,
+    borderWidth: props.borderColor ? 1 : 0,
 }))

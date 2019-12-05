@@ -1,20 +1,18 @@
-import React, { useReducer, useEffect, useCallback } from 'react'
+import React, { useReducer, useCallback, useEffect } from 'react'
 import styled from 'styled-components/native'
 
-import TextInput from '../../molecules/TextInput'
-import RoundButton from '../../molecules/buttons/round'
-import Button from '../../molecules/buttons/default-button'
-import * as Screen from '../../../constants/Dimensions'
-import Colors from '../../../constants/Colors'
+import TextInput from '../../molecules/SignUpInput'
 
 interface FormState {
     values: {
         nickname: string
         password: string
+        password2: string
     }
     validities: {
         nickname: boolean
         password: boolean
+        password2: boolean
     }
     formIsValid: boolean
 }
@@ -37,16 +35,24 @@ const formReducer = (state: FormState, action: ActionState) => {
                 [action.id]: action.isValid,
             }
 
-            let count = 0
             let updatedFormIsValid = true
             for (const key in updatedValidities) {
-                if (count === 2) break
+                console.log(updatedValidities)
+                if (key === 'password2') {
+                    if (updatedValues.password === updatedValues.password2) {
+                        updatedValidities.password = true
+                        updatedValidities.password2 = true
+                    } else {
+                        console.log('diff')
+                        updatedValidities.password = false
+                        updatedValidities.password2 = false
+                    }
+                }
                 updatedFormIsValid =
                     updatedFormIsValid && updatedValidities[key]
-                count++
             }
             return {
-                value: updatedValues,
+                values: updatedValues,
                 validities: updatedValidities,
                 formIsValid: updatedFormIsValid,
             }
@@ -55,68 +61,65 @@ const formReducer = (state: FormState, action: ActionState) => {
     }
 }
 
-export default function SignBox(props: any) {
+export default (props: any) => {
     const [formState, dispatch] = useReducer(formReducer, {
         values: {
             nickname: '',
             password: '',
+            password2: '',
         },
         validities: {
             nickname: false,
             password: false,
+            password2: false,
         },
         formIsValid: false,
     })
-
     const onChnageInput = useCallback(
         (id: string, value: string, isValid: boolean) => {
-            dispatch({ type: FORM_INPUT_UPDATE, id, value, isValid })
+            if (value) {
+                dispatch({ type: FORM_INPUT_UPDATE, id, value, isValid })
+            }
         },
         [dispatch]
     )
 
+    useEffect(() => {
+        props.isValid(formState.formIsValid)
+    }, [formState])
+
     return (
-        <Box style={props.style}>
+        <Wrapper style={props.style}>
             <TextInput
                 id="nickname"
                 onChange={onChnageInput}
                 value=""
                 placeholder="사용자 이름"
-                isSignIn
+                errorText="다른 사용자와 중복된 이름입니다."
+                confirmText="사용 가능한 이름입니다."
+                isValid
             />
             <TextInput
                 id="password"
                 onChange={onChnageInput}
                 value=""
                 secureTextEntry
-                placeholder="비밀번호"
-                isSignIn
+                placeholder="비밀번호 6자리 이상"
+                errorText="비밀번호를 6자리 이상 설정해주세요."
+                confirmText="안전한 비밀번호입니다."
+                isValid
             />
-            <RoundButton
-                title="로그인"
-                onPress={() => {
-                    if (formState.formIsValid) {
-                        props.navigation.navigate('Home')
-                    }
-                }}
-                textColor="white"
-                color={formState.formIsValid ? Colors.main : '#cbc9c9'}
-                width={Screen.width * 0.92}
-                height={Screen.height * 0.06}
+            <TextInput
+                id="password2"
+                onChange={onChnageInput}
+                value=""
+                secureTextEntry
+                placeholder="비밀번호 확인"
+                confirmText="비밀번호가 일치합니다."
+                isValid={formState.validities.password2}
             />
-            <Button
-                title="회원가입"
-                onPress={() => {
-                    props.navigation.navigate('SignUp')
-                }}
-                style={{ marginTop: Screen.height * 0.023 }}
-                textColor={Colors.main}
-            />
-        </Box>
+        </Wrapper>
     )
 }
 
-const Box = styled.View({
-    justifyContent: 'center',
-    alignItems: 'center',
-})
+const Wrapper = styled.View({})
