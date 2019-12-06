@@ -23,6 +23,7 @@ export default function Home(props: any) {
         <View
             style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
         >
+            <Text style={{ fontSize: 30 }}>Timer {time}</Text>
             <Text style={{ fontSize: 30 }}>{step} Steps</Text>
             <Text style={{ fontSize: 30 }}>Total Steps : {pastStep}</Text>
         </View>

@@ -37,16 +37,13 @@ const formReducer = (state: FormState, action: ActionState) => {
                 [action.id]: action.isValid,
             }
 
-            let count = 0
             let updatedFormIsValid = true
             for (const key in updatedValidities) {
-                if (count === 2) break
                 updatedFormIsValid =
                     updatedFormIsValid && updatedValidities[key]
-                count++
             }
             return {
-                value: updatedValues,
+                values: updatedValues,
                 validities: updatedValidities,
                 formIsValid: updatedFormIsValid,
             }
@@ -70,11 +67,16 @@ export default function SignBox(props: any) {
 
     const onChnageInput = useCallback(
         (id: string, value: string, isValid: boolean) => {
-            dispatch({ type: FORM_INPUT_UPDATE, id, value, isValid })
+            if (value) {
+                dispatch({ type: FORM_INPUT_UPDATE, id, value, isValid })
+            }
         },
         [dispatch]
     )
 
+    useEffect(() => {
+        // console.table(formState)
+    }, [formState])
     return (
         <Box style={props.style}>
             <TextInput

@@ -35,6 +35,5 @@ target 'caloring' do
   pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
 
 
-  pod 'RNBackgroundFetch', :path => '../node_modules/react-native-background-fetch'
 
 end

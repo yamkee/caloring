@@ -15,9 +15,6 @@ export default (props: any) => {
     const [formValid, setFormValid] = useState()
     const [agree, setAgree] = useState(false)
 
-    useEffect(() => {
-        console.log(age, gender, formValid)
-    }, [age, gender, formValid])
     return (
         <View>
             <SignUpInput

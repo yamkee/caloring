@@ -16,15 +16,20 @@ export default function SignUp(props: any) {
             onPress={Keyboard.dismiss}
             style={{ flex: 1 }}
         >
-            <Wrapper>
-                <JoinDesc />
-                <KeyboardAvoidingView
-                    behavior="padding"
-                    keyboardVerticalOffset={10}
-                >
+            <KeyboardAvoidingView
+                behavior="padding"
+                keyboardVerticalOffset={10}
+                style={{
+                    flex: 1,
+                    paddingHorizontal: Screen.width * 0.039,
+                    paddingTop: Screen.height * 0.057,
+                }}
+            >
+                <>
+                    <JoinDesc />
                     <SignUpForm navigation={props.navigation} />
-                </KeyboardAvoidingView>
-            </Wrapper>
+                </>
+            </KeyboardAvoidingView>
         </TouchableWithoutFeedback>
     )
 }
