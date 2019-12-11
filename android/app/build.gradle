@@ -139,6 +139,14 @@ android {
 }
 
 dependencies {
+     // If your app supports Android versions before Ice Cream Sandwich (API level 14)
+     implementation 'com.facebook.fresco:fresco:1.10.0'
+
+  // For animated GIF support
+  implementation 'com.facebook.fresco:animated-gif:1.10.0'
+
+  
+    implementation project(':react-native-kakao-logins')
     implementation project(':react-native-background-task')
     implementation project(':@react-native-community_async-storage')
     implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
