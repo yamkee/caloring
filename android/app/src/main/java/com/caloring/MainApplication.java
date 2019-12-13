@@ -3,8 +3,6 @@ package com.caloring;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.dooboolab.kakaologins.RNKakaoLoginsPackage;
-import com.jamesisaac.rnbackgroundtask.BackgroundTaskPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -43,8 +41,6 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RNKakaoLoginsPackage(),
-            new BackgroundTaskPackage(),
             new AsyncStoragePackage(),
           new ReanimatedPackage(),
           new RNGestureHandlerPackage(),
@@ -68,6 +64,5 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
-    BackgroundTaskPackage.useContext(this);
   }
 }

@@ -5,17 +5,20 @@ import ReduxThunk from 'redux-thunk'
 import { AppRegistry, NativeModules } from 'react-native'
 
 import Navigator from './navigators/MainNavigator'
+import background from './store/reducers/background'
 
-// const rootReducer = combineReducers({
+const rootReducer = combineReducers({
+    background: background,
+})
 
-// })
-
-// const store = createStore(rootReducer,applyMiddleware(ReduxThunk));
+const store = createStore(rootReducer, applyMiddleware(ReduxThunk))
 
 const App: () => any = () => {
-    return <Navigator />
-    // <Provider store={store}>
-    // </Provider>
+    return (
+        <Provider store={store}>
+            <Navigator />
+        </Provider>
+    )
 }
 
 export default App

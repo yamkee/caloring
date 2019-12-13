@@ -1,5 +1,6 @@
 import React, { useReducer, useEffect } from 'react'
 import { TextInput, StyleSheet } from 'react-native'
+import styled from 'styled-components/native'
 
 import * as Screen from '../../constants/Dimensions'
 
@@ -9,6 +10,8 @@ interface IProps {
     id: string
     secureTextEntry?: boolean
     placeholder?: string
+    color?: string
+    border?: boolean
 }
 
 interface InputState {
@@ -68,9 +71,12 @@ export default (props: IProps) => {
     }
 
     return (
-        <TextInput
-            {...props}
-            style={styles.TextInput}
+        <Input
+            onChange={props.onChange}
+            id={props.id}
+            secureTextEntry={props.secureTextEntry}
+            placeholder={props.placeholder}
+            style={{ backgroundColor: props.color }}
             onChangeText={textChangeHandler}
             onBlur={blurHandler}
             value={inputState.value}
@@ -78,15 +84,13 @@ export default (props: IProps) => {
     )
 }
 
-const styles = StyleSheet.create({
-    TextInput: {
-        width: Screen.width * 0.92,
-        height: Screen.height * 0.06,
-        borderRadius: Screen.height * 0.03,
-        borderColor: 'grey',
-        borderWidth: 1,
-        marginBottom: Screen.height * 0.018,
-        paddingVertical: '3%',
-        paddingHorizontal: '4%',
-    },
-})
+const Input = styled.TextInput<IProps>(props => ({
+    width: Screen.width * 0.92,
+    height: Screen.height * 0.06,
+    borderRadius: Screen.height * 0.03,
+    borderColor: 'grey',
+    borderWidth: props.border ? 1 : 0,
+    marginBottom: Screen.height * 0.018,
+    paddingVertical: '3%',
+    paddingHorizontal: '4%',
+}))

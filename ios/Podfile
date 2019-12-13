@@ -32,8 +32,9 @@ target 'caloring' do
 
   use_unimodules!
 
-  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
 
 
+
+  pod 'RNSoundPlayer', :path => '../node_modules/react-native-sound-player'
 
 end

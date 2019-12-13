@@ -1,4 +1,6 @@
-import React, { useEffect } from 'react'
+// import BackgroundTask from 'react-native-background-task'
+// import RNKakaoLogins from 'react-native-kakao-logins'
+import React, { useEffect, useState } from 'react'
 import {
     KeyboardAvoidingView,
     Keyboard,
@@ -8,68 +10,82 @@ import {
     Alert,
     View,
     Image,
+    AppState,
 } from 'react-native'
 import styled from 'styled-components/native'
-import BackgroundTask from 'react-native-background-task'
-import RNKakaoLogins from 'react-native-kakao-logins'
+// import AsyncStorage from '@react-native-community/async-storage'
+// import BackgroundJob from 'react-native-background-job'
+import { LinearGradient } from 'expo-linear-gradient'
+import { useSelector, useDispatch } from 'react-redux'
+// import SoundPlayer from 'react-native-sound-player'
 
 import Text from '../../atoms/Text'
 import SignBox from '../../organisms/auth/SignBox'
 import * as Screen from '../../../constants/Dimensions'
+import * as background from '../../../store/actions/background'
+import Colors from '../../../constants/Colors'
 
-// let test = '11'
+// const jobFun = async () => {
+//     // await AsyncStorage.setItem('bac', 'please i want background job!!!!!!')
+// }
+// const backgroundJob = {
+//     jobKey: 'myJob',
+//     job: () => {
+//         jobFun()
+//     },
+// }
 
-// BackgroundTask.define(async () => {
-//     test = 'h1'
-//     console.log('Hi')
-// })
-
+// BackgroundJob.register(backgroundJob)
 export default function SignIn(props: any) {
-    // const statusAsync = async () => {
-    //     const status = await BackgroundTask.statusAsync()
-    //     console.log(status.available)
+    useEffect(() => {
+        // getDataFromStorage()
+        // SoundPlayer.onFinishedPlaying((success: boolean) => {
+        //     // success is true when the sound is played
+        //     console.log('finished playing', success)
+        // })
+        // return SoundPlayer.unmount()
+    }, [])
+    // const [back, setBack] = useState()
+    // const getDataFromStorage = async () => {
+    //     const str = await AsyncStorage.getItem('back')
+    //     setBack(str)
     // }
 
-    // useEffect(() => {
-    //     BackgroundTask.schedule()
-    //     statusAsync()
-    // }, [])
-
-    const kakaoLogin = () => {
-        RNKakaoLogins.login((err, result) => {
-            if (err) {
-                Alert.alert('error', err.toString())
-                return
-            }
-            Alert.alert('result', JSON.stringify(result))
-        })
-    }
-
     return (
-        // <View style={{ backgroundColor: '#A5A0E8', flex: 1 }} />
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <KeyboardAvoidingView
-                style={{
-                    flex: 1,
-                    paddingTop: '3.3%',
-                }}
-                behavior="position"
-                keyboardVerticalOffset={0}
+            <LinearGradient
+                colors={Colors.gradient1}
+                style={{ flex: 1 }}
+                locations={[0, 0.7, 1]}
             >
-                {/* <Carousel> */}
-                {/* <Button
-                        title="kakao login"
-                        onPress={() => {
-                            kakaoLogin()
+                {/* <KeyboardAvoidingView
+                        style={{
+                            flex: 1,
                         }}
-                    /> */}
-                <Image source={require('../../../assets/giphy.gif')} />
-                {/* </Carousel> */}
+                        behavior="position"
+                        keyboardVerticalOffset={0}
+                    > */}
+                {/* <Button
+                    title="backgroud job"
+                    onPress={() => {
+                        BackgroundJob.schedule({
+                            jobKey: 'myJob',
+                            allowExecutionInForeground: true,
+                        }).then(() => {
+                            console.log('success')
+                            console.log(AppState.currentState)
+                        })
+                    }}
+                /> */}
+                <ImageContainer>
+                    <Image source={require('../../../assets/Image1.png')} />
+                </ImageContainer>
                 <SignBox
                     navigation={props.navigation}
                     style={{ marginTop: Screen.height * 0.02 }}
                 />
-            </KeyboardAvoidingView>
+                {/* </KeyboardAvoidingView> */}
+            </LinearGradient>
         </TouchableWithoutFeedback>
     )
 }
@@ -78,8 +94,9 @@ const Wrapper = styled.View({
     paddingTop: '3.3%',
 })
 
-const Carousel = styled.View({
+const ImageContainer = styled.View({
     width: Screen.width,
     height: Screen.height * 0.59,
-    backgroundColor: '#33325d',
+    alignItems: 'center',
+    justifyContent: 'center',
 })
