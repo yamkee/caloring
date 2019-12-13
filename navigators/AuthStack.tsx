@@ -1,7 +1,7 @@
 import { createStackNavigator } from 'react-navigation-stack'
 
-import SignIn from '../components/pages/auth/SignIn'
-import SignUp from '../components/pages/auth/SignUp'
+import SignIn from '../components/screens/auth/SignIn'
+import SignUp from '../components/screens/auth/SignUp'
 
 export default createStackNavigator(
     {
