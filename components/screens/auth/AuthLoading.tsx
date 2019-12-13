@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { View, Text, Button, ActivityIndicator } from 'react-native'
+import { View, ActivityIndicator } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
 
 export default function AuthLoading(props: any) {

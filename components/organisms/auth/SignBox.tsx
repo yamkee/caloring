@@ -101,8 +101,10 @@ export default function SignBox(props: any) {
                         props.navigation.navigate('Home')
                     }
                 }}
-                textColor="white"
-                color={formState.formIsValid ? Colors.main : '#cbc9c9'}
+                textColor={formState.formIsValid ? Colors.main : Colors.white}
+                color={
+                    formState.formIsValid ? Colors.white : Colors.defaultGrey
+                }
                 width={Screen.width * 0.92}
                 height={Screen.height * 0.06}
             />
