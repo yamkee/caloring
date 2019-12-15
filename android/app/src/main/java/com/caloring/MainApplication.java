@@ -3,6 +3,7 @@ package com.caloring;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.reactnative.googlefit.GoogleFitPackage;
 import com.johnsonsu.rnsoundplayer.RNSoundPlayerPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.facebook.react.ReactNativeHost;
@@ -42,6 +43,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new GoogleFitPackage(BuildConfig.APPLICATION_ID),
             new RNSoundPlayerPackage(),
             new AsyncStoragePackage(),
           new ReanimatedPackage(),

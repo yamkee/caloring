@@ -4,4 +4,5 @@ export default {
     error: '#ff6e6e',
     white: '#ffffff',
     gradient1: ['#7d8ff0', '#e5bcde', '#fadacf'],
+    gradient2: ['#907fa4', '#ffb09b', '#ffc91d'],
 }
