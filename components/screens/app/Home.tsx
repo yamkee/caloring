@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { View, Image, AppState } from 'react-native'
+import { View, Image, AppState, Animated } from 'react-native'
 import { Pedometer } from 'expo-sensors'
 import { LinearGradient } from 'expo-linear-gradient'
 import SoundPlayer from 'react-native-sound-player'
-import { useKeepAwake } from 'expo-keep-awake'
 import GoogleFit from 'react-native-google-fit'
 
 import Text from '../../atoms/Text'
 import Colors from '../../../constants/Colors'
 import Button from '../../molecules/buttons/default-button'
+import Location from '../../../constants/Location'
+import * as Dimension from '../../../constants/Dimensions'
 
 let subscription: any
 
@@ -23,13 +24,30 @@ export default function Home(props: any) {
         set_onFinishedPlayingSubscription,
     ] = useState(null)
     const [time, setTime] = useState(0)
+    //for animations
+    const [value, setValue] = useState(new Animated.Value(0))
 
-    // useKeepAwake()
+    const fadeIn = () => {
+        Animated.timing(value, { toValue: 100, duration: 1000 }).start()
+    }
+    const fadeIn2 = () => {
+        Animated.timing(value, { toValue: 200, duration: 1000 }).start()
+    }
+    const getStyle = () => {
+        return {
+            width: value,
+            height: 10,
+            backgroundColor: 'red',
+            opacity: 1,
+            borderRadius: 5,
+        }
+    }
     useEffect(() => {
         AppState.addEventListener('change', _handleAppStateChange)
         if (subscription) {
             subscription.remove()
         }
+        fadeIn()
         subscribe()
         getStep()
         set_onFinishedPlayingSubscription(
@@ -50,6 +68,12 @@ export default function Home(props: any) {
         setTotalStep(pastStep + step)
     }, [step, pastStep])
 
+    useEffect(() => {
+        if (time > 0) {
+            fadeIn2()
+        }
+    }, [time])
+
     const _handleAppStateChange = nextAppState => {
         if (
             appState.match(/inactive|background/) &&
@@ -57,7 +81,6 @@ export default function Home(props: any) {
         ) {
             subscription.remove()
             subscribe()
-            console.log('App has come to the foreground!')
         }
         setAppState(nextAppState)
     }
@@ -75,12 +98,16 @@ export default function Home(props: any) {
         }
         GoogleFit.getDailyStepCountSamples(options, (isError, result) => {
             if (!isError) {
+                console.log(result)
                 result.map(res => {
                     if (
                         res.source === 'com.google.android.gms:estimated_steps'
                     ) {
                         const ldx = res.steps.length
-                        setPastStep(res.steps[ldx - 1].value)
+                        if (ldx === 0) {
+                        } else {
+                            setPastStep(res.steps[ldx - 1].value)
+                        }
                     }
                 })
             } else {
@@ -102,8 +129,17 @@ export default function Home(props: any) {
         <LinearGradient
             colors={time % 2 === 0 ? Colors.gradient1 : Colors.gradient2}
             style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
-            locations={time % 2 === 0 ? [0, 0.7, 1] : [0, 0.32, 1]}
+            locations={time % 2 === 0 ? Location.gradient1 : Location.gradient2}
         >
+            <View
+                style={{
+                    width: Dimension.width * 0.8,
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                }}
+            >
+                <Animated.View style={getStyle()} />
+            </View>
             <Button
                 onPress={() => {
                     // soundPlay()
@@ -113,14 +149,25 @@ export default function Home(props: any) {
             />
             <Image source={require('../../../assets/test.gif')} />
             <Text style={{ fontSize: 30 }}>{totalStep} Steps</Text>
-            <Text style={{ fontSize: 30 }}>Total Steps : {pastStep}</Text>
+            <Text style={{ fontSize: 30 }}>Past Steps : {pastStep}</Text>
+            <Button
+                onPress={() => {
+                    props.navigation.navigate('FriendList')
+                }}
+                title="친구 목록 보기"
+            />
+            <Button
+                onPress={() => {
+                    props.navigation.navigate('MyRecord')
+                }}
+                title="기록 보기"
+            />
+            <Button
+                onPress={() => {
+                    props.navigation.navigate('Notifications')
+                }}
+                title="알림 보기"
+            />
         </LinearGradient>
     )
 }
-
-Home.navigationOptions = {
-    headerShown: false,
-}
-
-// <Text style={{ fontSize: 30 }}>Timer {time}</Text>
-//

@@ -15,10 +15,8 @@ export default function AuthLoading(props: any) {
             const granted = await PermissionsAndroid.request(
                 PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
                 {
-                    title: 'Cool Photo App Camera Permission',
-                    message:
-                        'Cool Photo App needs access to your camera ' +
-                        'so you can take awesome pictures.',
+                    title: 'WALK WITH',
+                    message: 'WALK WITH neads access to your location ',
                     buttonNeutral: 'Ask Me Later',
                     buttonNegative: 'Cancel',
                     buttonPositive: 'OK',

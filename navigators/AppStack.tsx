@@ -5,9 +5,16 @@ import FriendList from '../components/screens/app/FriendsList'
 import MyRecord from '../components/screens/app/MyRecord'
 import Notifications from '../components/screens/app/Notifications'
 
-export default createStackNavigator({
-    Home,
-    FriendList,
-    MyRecord,
-    Notifications,
-})
+export default createStackNavigator(
+    {
+        Home,
+        FriendList,
+        MyRecord,
+        Notifications,
+    },
+    {
+        defaultNavigationOptions: {
+            headerShown: false,
+        },
+    }
+)
