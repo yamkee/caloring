@@ -8,6 +8,7 @@ interface TextProps {
     children: any
     level?: number
     color?: string
+    font?: string
 }
 
 const fontSizeHandler = (level: number) => {
@@ -32,4 +33,5 @@ export default (props: TextProps) => {
 const Text = styled.Text<TextProps>(props => ({
     fontSize: fontSizeHandler(props.level),
     color: props.color,
+    fontWeight: 500,
 }))

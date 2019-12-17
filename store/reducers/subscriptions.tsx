@@ -1,4 +1,4 @@
-import { PLUS, MINUS } from '../actions/background'
+import { PLUS, MINUS } from '../actions/subscriptions'
 
 const initialState = {
     num: 0,

@@ -85,6 +85,7 @@ export default function SignBox(props: any) {
                 value=""
                 placeholder="사용자 이름"
                 color={Colors.white}
+                opacity={0.59}
             />
             <TextInput
                 id="password"
@@ -93,6 +94,7 @@ export default function SignBox(props: any) {
                 secureTextEntry
                 placeholder="비밀번호"
                 color={Colors.white}
+                opacity={0.59}
             />
             <RoundButton
                 title="로그인"
@@ -102,9 +104,7 @@ export default function SignBox(props: any) {
                     }
                 }}
                 textColor={formState.formIsValid ? Colors.main : Colors.white}
-                color={
-                    formState.formIsValid ? Colors.white : Colors.defaultGrey
-                }
+                color={formState.formIsValid ? Colors.white : '#b5b5b5'}
                 width={Screen.width * 0.92}
                 height={Screen.height * 0.06}
             />
@@ -113,7 +113,7 @@ export default function SignBox(props: any) {
                 onPress={() => {
                     props.navigation.navigate('SignUp')
                 }}
-                style={{ marginTop: Screen.height * 0.023 }}
+                style={{ marginTop: Screen.height * 0.023, elevation: 9 }}
                 textColor={Colors.main}
             />
         </Box>

@@ -24,30 +24,9 @@ export default function Home(props: any) {
         set_onFinishedPlayingSubscription,
     ] = useState(null)
     const [time, setTime] = useState(0)
-    //for animations
-    const [value, setValue] = useState(new Animated.Value(0))
 
-    const fadeIn = () => {
-        Animated.timing(value, { toValue: 100, duration: 1000 }).start()
-    }
-    const fadeIn2 = () => {
-        Animated.timing(value, { toValue: 200, duration: 1000 }).start()
-    }
-    const getStyle = () => {
-        return {
-            width: value,
-            height: 10,
-            backgroundColor: 'red',
-            opacity: 1,
-            borderRadius: 5,
-        }
-    }
     useEffect(() => {
         AppState.addEventListener('change', _handleAppStateChange)
-        if (subscription) {
-            subscription.remove()
-        }
-        fadeIn()
         subscribe()
         getStep()
         set_onFinishedPlayingSubscription(
@@ -67,12 +46,6 @@ export default function Home(props: any) {
     useEffect(() => {
         setTotalStep(pastStep + step)
     }, [step, pastStep])
-
-    useEffect(() => {
-        if (time > 0) {
-            fadeIn2()
-        }
-    }, [time])
 
     const _handleAppStateChange = nextAppState => {
         if (
@@ -131,15 +104,6 @@ export default function Home(props: any) {
             style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
             locations={time % 2 === 0 ? Location.gradient1 : Location.gradient2}
         >
-            <View
-                style={{
-                    width: Dimension.width * 0.8,
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                }}
-            >
-                <Animated.View style={getStyle()} />
-            </View>
             <Button
                 onPress={() => {
                     // soundPlay()

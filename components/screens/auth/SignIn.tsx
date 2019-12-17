@@ -8,7 +8,6 @@ import {
 import styled from 'styled-components/native'
 import { LinearGradient } from 'expo-linear-gradient'
 
-import Text from '../../atoms/Text'
 import SignBox from '../../organisms/auth/SignBox'
 import * as Screen from '../../../constants/Dimensions'
 import Colors from '../../../constants/Colors'
@@ -44,6 +43,7 @@ export default function SignIn(props: any) {
 const ImageContainer = styled.View({
     width: Screen.width,
     height: Screen.height * 0.59,
+    paddingBottom: Screen.height * 0.077,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
 })

@@ -1,5 +1,4 @@
 import React, { useReducer, useEffect } from 'react'
-import { TextInput, StyleSheet } from 'react-native'
 import styled from 'styled-components/native'
 
 import * as Screen from '../../constants/Dimensions'
@@ -12,6 +11,7 @@ interface IProps {
     placeholder?: string
     color?: string
     border?: boolean
+    opacity?: number
 }
 
 interface InputState {
@@ -76,7 +76,7 @@ export default (props: IProps) => {
             id={props.id}
             secureTextEntry={props.secureTextEntry}
             placeholder={props.placeholder}
-            style={{ backgroundColor: props.color }}
+            style={{ backgroundColor: props.color, opacity: props.opacity }}
             onChangeText={textChangeHandler}
             onBlur={blurHandler}
             value={inputState.value}
