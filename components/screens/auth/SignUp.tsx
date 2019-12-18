@@ -15,6 +15,7 @@ import Header from '../../organisms/auth/signUp/Header'
 const Roboto = styled.Text`
     font-size: 30;
     font-family: 'Roboto-Black';
+    background-color: white;
 `
 
 export default function SignUp(props: any) {

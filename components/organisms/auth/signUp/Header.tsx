@@ -1,21 +1,27 @@
 import React from 'react'
-import {} from 'react-native'
 import styled from 'styled-components/native'
 
 import Text from '../../../atoms/Text'
-import Button from '../../../molecules/buttons/default-button'
+import IconButton from '../../../molecules/buttons/icon-button'
 import * as screen from '../../../../constants/Dimensions'
 import Colors from '../../../../constants/Colors'
+import CloseIcon from '../../../atoms/icons/close-button'
+import dp from '../../../../constants/Dp'
 
 export default function Header(props: any) {
     return (
         <Wrapper>
-            <Button
-                title="X"
+            <CloseButton
                 onPress={() => {
                     props.navigation.goBack()
                 }}
-            />
+            >
+                <CloseIcon
+                    width={dp(3.5)}
+                    height={dp(3.5)}
+                    fill={Colors.white}
+                />
+            </CloseButton>
             <Text color={Colors.white} level={5}>
                 회원가입
             </Text>
@@ -24,7 +30,18 @@ export default function Header(props: any) {
 }
 
 const Wrapper = styled.View({
+    flexDirection: 'row',
+    alignItems: 'center',
     width: screen.width,
     height: screen.height * 0.112,
-    flexDirection: 'row',
+    paddingTop: screen.height * 0.059,
+    paddingLeft: screen.width * 0.044,
+})
+
+const CloseButton = styled(IconButton)({
+    width: dp(6),
+    height: dp(6),
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: screen.width * 0.039,
 })
