@@ -37,4 +37,6 @@ target 'caloring' do
 
   pod 'RNSoundPlayer', :path => '../node_modules/react-native-sound-player'
 
+  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
+
 end

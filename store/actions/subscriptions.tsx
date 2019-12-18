@@ -1,10 +1,5 @@
-export const PLUS = 'PLUS'
-export const MINUS = 'MINUS'
+export const SAVE_SUBS = 'SAVE_SUBS'
 
-export const plus = (num: number) => {
-    return { type: PLUS, num: num + 1 }
-}
-
-export const minus = (num: number) => {
-    return { type: MINUS, num: num - 1 }
+export const saveSubs = (subscription: any) => {
+    return { type: SAVE_SUBS, sub: subscription }
 }

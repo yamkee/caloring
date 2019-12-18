@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import ReduxThunk from 'redux-thunk'
 
 import Navigator from './navigators/MainNavigator'
-import background from './store/reducers/background'
+import background from './store/reducers/subscriptions'
 
 const rootReducer = combineReducers({
     background: background,

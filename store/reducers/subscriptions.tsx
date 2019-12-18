@@ -1,18 +1,14 @@
-import { PLUS, MINUS } from '../actions/subscriptions'
+import { SAVE_SUBS } from '../actions/subscriptions'
 
 const initialState = {
-    num: 0,
+    pedometer: null,
 }
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case PLUS:
+        case SAVE_SUBS:
             return {
-                num: action.num,
-            }
-        case MINUS:
-            return {
-                num: action.num,
+                pedometer: action.sub,
             }
         default:
             return initialState

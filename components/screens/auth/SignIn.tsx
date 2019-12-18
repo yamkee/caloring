@@ -9,17 +9,14 @@ import styled from 'styled-components/native'
 import { LinearGradient } from 'expo-linear-gradient'
 
 import SignBox from '../../organisms/auth/SignBox'
-import * as Screen from '../../../constants/Dimensions'
+import * as screen from '../../../constants/Dimensions'
+import Text from '../../atoms/Text'
 import Colors from '../../../constants/Colors'
 
 export default function SignIn(props: any) {
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <LinearGradient
-                colors={Colors.gradient1}
-                style={{ flex: 1 }}
-                locations={[0, 0.7, 1]}
-            >
+            <LinearGradient colors={Colors.gradient0} style={{ flex: 1 }}>
                 <KeyboardAvoidingView
                     style={{
                         flex: 1,
@@ -29,10 +26,17 @@ export default function SignIn(props: any) {
                 >
                     <ImageContainer>
                         <Image source={require('../../../assets/Image1.png')} />
+                        <Text
+                            color={Colors.white}
+                            level={4}
+                            style={{ marginTop: screen.height * 0.03 }}
+                        >
+                            WALK WITH
+                        </Text>
                     </ImageContainer>
                     <SignBox
                         navigation={props.navigation}
-                        style={{ marginTop: Screen.height * 0.02 }}
+                        style={{ marginTop: screen.height * 0.02 }}
                     />
                 </KeyboardAvoidingView>
             </LinearGradient>
@@ -41,9 +45,9 @@ export default function SignIn(props: any) {
 }
 
 const ImageContainer = styled.View({
-    width: Screen.width,
-    height: Screen.height * 0.59,
-    paddingBottom: Screen.height * 0.077,
+    width: screen.width,
+    height: screen.height * 0.59,
+    paddingBottom: screen.height * 0.127,
     alignItems: 'center',
     justifyContent: 'flex-end',
 })

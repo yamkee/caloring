@@ -6,6 +6,7 @@ import RoundButton from '../../molecules/buttons/round'
 import Button from '../../molecules/buttons/default-button'
 import * as Screen from '../../../constants/Dimensions'
 import Colors from '../../../constants/Colors'
+import { googleFit } from '../../../functions/googleFit'
 
 interface FormState {
     values: {
@@ -74,9 +75,6 @@ export default function SignBox(props: any) {
         [dispatch]
     )
 
-    useEffect(() => {
-        // console.table(formState)
-    }, [formState])
     return (
         <Box style={props.style}>
             <TextInput
@@ -98,12 +96,15 @@ export default function SignBox(props: any) {
             />
             <RoundButton
                 title="로그인"
-                onPress={() => {
+                onPress={async () => {
                     if (formState.formIsValid) {
+                        await googleFit()
                         props.navigation.navigate('Home')
                     }
                 }}
-                textColor={formState.formIsValid ? Colors.main : Colors.white}
+                textColor={
+                    formState.formIsValid ? Colors.defaultGrey : Colors.white
+                }
                 color={formState.formIsValid ? Colors.white : '#b5b5b5'}
                 width={Screen.width * 0.92}
                 height={Screen.height * 0.06}
@@ -114,7 +115,7 @@ export default function SignBox(props: any) {
                     props.navigation.navigate('SignUp')
                 }}
                 style={{ marginTop: Screen.height * 0.023, elevation: 9 }}
-                textColor={Colors.main}
+                textColor={Colors.white}
             />
         </Box>
     )

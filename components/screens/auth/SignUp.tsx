@@ -3,12 +3,19 @@ import {
     KeyboardAvoidingView,
     Keyboard,
     TouchableWithoutFeedback,
+    View,
 } from 'react-native'
 import styled from 'styled-components/native'
 
-import JoinDesc from '../../organisms/auth/JoinDesc'
 import SignUpForm from '../../organisms/auth/SignUpForm'
-import * as Screen from '../../../constants/Dimensions'
+import * as screen from '../../../constants/Dimensions'
+import Colors from '../../../constants/Colors'
+import Header from '../../organisms/auth/signUp/Header'
+
+const Roboto = styled.Text`
+    font-size: 30;
+    font-family: 'Roboto-Black';
+`
 
 export default function SignUp(props: any) {
     return (
@@ -21,21 +28,16 @@ export default function SignUp(props: any) {
                 keyboardVerticalOffset={10}
                 style={{
                     flex: 1,
-                    paddingHorizontal: Screen.width * 0.039,
-                    paddingTop: Screen.height * 0.057,
+                    backgroundColor: Colors.main,
                 }}
             >
                 <>
-                    <JoinDesc />
-                    <SignUpForm navigation={props.navigation} />
+                    <Header navigation={props.navigation} />
+                    <Roboto>roboto black</Roboto>
+                    {/* <JoinDesc />
+                    <SignUpForm navigation={props.navigation} /> */}
                 </>
             </KeyboardAvoidingView>
         </TouchableWithoutFeedback>
     )
 }
-
-const Wrapper = styled.View({
-    flex: 1,
-    paddingHorizontal: Screen.width * 0.039,
-    paddingTop: Screen.height * 0.057,
-})

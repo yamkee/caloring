@@ -14,9 +14,15 @@ interface TextProps {
 const fontSizeHandler = (level: number) => {
     switch (level) {
         case 1:
-            return Dp(3.5)
+            return Dp(3)
         case 2:
-            return Dp(6)
+            return Dp(3.3)
+        case 3:
+            return Dp(3.5)
+        case 4:
+            return Dp(4)
+        case 5:
+            return Dp(4.5)
         default:
             return Dp(3.5)
     }
@@ -33,5 +39,5 @@ export default (props: TextProps) => {
 const Text = styled.Text<TextProps>(props => ({
     fontSize: fontSizeHandler(props.level),
     color: props.color,
-    fontWeight: 500,
+    fontFamily: 'Roboto-Regular',
 }))
