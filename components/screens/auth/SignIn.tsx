@@ -30,6 +30,8 @@ export default function SignIn(props: any) {
                             color={Colors.white}
                             level={4}
                             style={{ marginTop: screen.height * 0.03 }}
+                            font="roboto"
+                            weight={5}
                         >
                             WALK WITH
                         </Text>

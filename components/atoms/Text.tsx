@@ -5,10 +5,10 @@ import Dp from '../../constants/Dp'
 
 interface TextProps {
     style?: any
-    children: any
     level?: number
     color?: string
     font?: string
+    weight?: number
 }
 
 const fontSizeHandler = (level: number) => {
@@ -28,16 +28,47 @@ const fontSizeHandler = (level: number) => {
     }
 }
 
-export default (props: TextProps) => {
-    return (
-        <Text style={props.style} level={props.level} color={props.color}>
-            {props.children}
-        </Text>
-    )
+const fontFamilyHandler = (font: string, weight: number) => {
+    if (font == 'roboto') {
+        switch (weight) {
+            case 1:
+                return 'Roboto-Thin'
+            case 2:
+                return 'Roboto-Light'
+            case 3:
+                return 'Roboto-Regular'
+            case 4:
+                return 'Roboto-Medium'
+            case 5:
+                return 'Roboto-Bold'
+            case 6:
+                return 'Roboto-Black'
+            default:
+                return 'Roboto-Regular'
+        }
+    } else {
+        switch (weight) {
+            case 1:
+                return 'NotoSansCJKkr-Thin'
+            case 2:
+                return 'NotoSansCJKkr-Light'
+            case 3:
+                return 'NotoSansCJKkr-Regular'
+            case 4:
+                return 'NotoSansCJKkr-Medium'
+            case 5:
+                return 'NotoSansCJKkr-Bold'
+            case 6:
+                return 'NotoSansCJKkr-Black'
+            default:
+                return 'NotoSansCJKkr-Medium'
+        }
+    }
 }
 
-const Text = styled.Text<TextProps>(props => ({
+export default styled.Text<TextProps>(props => ({
+    ...props.style,
     fontSize: fontSizeHandler(props.level),
     color: props.color,
-    fontFamily: 'NotoSansCJKkr-Medium',
+    fontFamily: fontFamilyHandler(props.font, props.weight),
 }))
