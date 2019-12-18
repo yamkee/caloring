@@ -39,5 +39,5 @@ export default (props: TextProps) => {
 const Text = styled.Text<TextProps>(props => ({
     fontSize: fontSizeHandler(props.level),
     color: props.color,
-    fontFamily: 'Roboto-Regular',
+    fontFamily: 'NotoSansCJKkr-Medium',
 }))
