@@ -1,7 +1,7 @@
 export default {
     main: '#ffa996',
     defaultGrey: '#707070',
-    error: '#ff6e6e',
+    error: '#ff6e39',
     white: '#ffffff',
     gradient0: ['#ffe6ad', '#fdb6b6'],
     gradient1: ['#7d8ff0', '#e5bcde', '#fadacf'],

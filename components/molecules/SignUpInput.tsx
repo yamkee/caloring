@@ -5,6 +5,7 @@ import styled from 'styled-components/native'
 import * as Screen from '../../constants/Dimensions'
 import Text from '../atoms/Text'
 import Colors from '../../constants/Colors'
+import dp from '../../constants/Dp'
 
 interface IProps {
     onChange: any
@@ -86,13 +87,17 @@ export default (props: IProps) => {
         if (inputState.touched && !inputState.isValid) {
             return (
                 <ConfirmTextContainer>
-                    <Text color={Colors.error}>{props.errorText}</Text>
+                    <Text color={Colors.error} level={1}>
+                        {props.errorText}
+                    </Text>
                 </ConfirmTextContainer>
             )
         } else if (inputState.touched && inputState.isValid && props.isValid) {
             return (
                 <ConfirmTextContainer>
-                    <Text color={Colors.main}>{props.confirmText}</Text>
+                    <Text color={Colors.defaultGrey} level={1}>
+                        {props.confirmText}
+                    </Text>
                 </ConfirmTextContainer>
             )
         } else {
@@ -114,13 +119,14 @@ export default (props: IProps) => {
 
 const Wrapper = styled.View({})
 const TextInput = styled.TextInput<IProps>(props => ({
-    width: Screen.width * 0.92,
-    height: Screen.height * 0.06,
+    width: Screen.width * 0.95,
+    height: Screen.height * 0.056,
     borderRadius: Screen.height * 0.03,
-    borderColor: 'grey',
     borderWidth: 1,
+    borderColor: 'grey',
     paddingVertical: '3%',
     paddingHorizontal: '4%',
+    fontSize: dp(3),
 }))
 
 const ConfirmTextContainer = styled.View({

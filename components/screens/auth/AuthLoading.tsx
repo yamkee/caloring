@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
-import { View, ActivityIndicator, PermissionsAndroid } from 'react-native'
+import { View, ActivityIndicator } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
-import { googleFit } from '../../../functions/googleFit'
 
 export default function AuthLoading(props: any) {
     useEffect(() => {

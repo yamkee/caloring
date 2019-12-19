@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components/native'
 
 import RoundButton from '../buttons/round'
-import * as Screen from '../../../constants/Dimensions'
+import * as screen from '../../../constants/Dimensions'
 import Colors from '../../../constants/Colors'
 
 export default (props: any) => {
@@ -15,10 +15,10 @@ export default (props: any) => {
                     props.onPress('남')
                     setSelected(0)
                 }}
-                width={Screen.width * 0.436}
-                height={Screen.height * 0.059}
+                width={screen.width * 0.436}
+                height={screen.height * 0.059}
                 title="남"
-                borderColor={Colors.defaultGrey}
+                borderColor={Colors.main}
                 color={selected === 0 ? Colors.main : ''}
                 textColor={selected === 0 ? 'white' : ''}
             />
@@ -27,10 +27,10 @@ export default (props: any) => {
                     props.onPress('여')
                     setSelected(1)
                 }}
-                width={Screen.width * 0.436}
-                height={Screen.height * 0.059}
+                width={screen.width * 0.436}
+                height={screen.height * 0.059}
                 title="여"
-                borderColor={Colors.defaultGrey}
+                borderColor={Colors.main}
                 color={selected === 1 ? Colors.main : ''}
                 textColor={selected === 1 ? 'white' : ''}
             />
@@ -41,4 +41,5 @@ export default (props: any) => {
 const Wrapper = styled.View({
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginHorizontal: screen.width * 0.025,
 })

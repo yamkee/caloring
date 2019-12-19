@@ -15,6 +15,7 @@ interface IProps {
     title?: string
     width: number
     height: number
+    fontWeight?: number
 }
 
 interface ButtonProps {
@@ -37,7 +38,11 @@ export default (props: IProps) => {
             height={props.height}
             borderColor={props.borderColor}
         >
-            <Text color={props.textColor} level={props.level}>
+            <Text
+                color={props.textColor}
+                level={props.level}
+                weight={props.fontWeight ? props.fontWeight : 2}
+            >
                 {title}
             </Text>
         </Button>

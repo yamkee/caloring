@@ -22,6 +22,7 @@ export default function Header(props: any) {
                     fill={Colors.white}
                 />
             </CloseButton>
+
             <Text color={Colors.white} level={5}>
                 회원가입
             </Text>
@@ -31,11 +32,9 @@ export default function Header(props: any) {
 
 const Wrapper = styled.View({
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-end',
     width: screen.width,
     height: screen.height * 0.112,
-    paddingTop: screen.height * 0.059,
-    paddingLeft: screen.width * 0.044,
 })
 
 const CloseButton = styled(IconButton)({
@@ -44,4 +43,6 @@ const CloseButton = styled(IconButton)({
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: screen.width * 0.039,
+    marginLeft: screen.width * 0.044,
+    marginBottom: dp(4.5),
 })

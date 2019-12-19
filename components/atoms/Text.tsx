@@ -68,6 +68,6 @@ const fontFamilyHandler = (font: string, weight: number) => {
 export default styled.Text<TextProps>(props => ({
     ...props.style,
     fontSize: fontSizeHandler(props.level),
-    color: props.color,
     fontFamily: fontFamilyHandler(props.font, props.weight),
+    color: props.color,
 }))

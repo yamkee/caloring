@@ -2,6 +2,7 @@ import React, { useReducer, useCallback, useEffect } from 'react'
 import styled from 'styled-components/native'
 
 import TextInput from '../../molecules/SignUpInput'
+import * as screen from '../../../constants/Dimensions'
 
 interface FormState {
     values: {
@@ -122,4 +123,6 @@ export default (props: any) => {
     )
 }
 
-const Wrapper = styled.View({})
+const Wrapper = styled.View({
+    marginHorizontal: screen.width * 0.02,
+})
