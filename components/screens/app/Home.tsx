@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Image, AppState, View, AppStateStatus } from 'react-native'
+import { Image, AppState, AppStateStatus } from 'react-native'
 import { Pedometer } from 'expo-sensors'
 import { LinearGradient } from 'expo-linear-gradient'
 import SoundPlayer from 'react-native-sound-player'
@@ -10,6 +10,8 @@ import Button from '../../molecules/buttons/default-button'
 import Location from '../../../constants/Location'
 import { getStep } from '../../../functions/googleFit'
 import { stopPlaying, soundPlay } from '../../../functions/soundPlay'
+import Header from '../../organisms/home/header'
+import * as screen from '../../../constants/Dimensions'
 
 let pedometerSubscription: any
 let musicSubscription: any
@@ -57,6 +59,7 @@ export default function Home(props: any) {
             pedometerSubscription.remove()
             musicSubscription.remove()
         } else if (nextAppState === 'active') {
+            getStep(setPastStep)
             soundPlay()
             subscribe()
         }
@@ -68,20 +71,16 @@ export default function Home(props: any) {
             colors={time % 2 === 0 ? Colors.gradient1 : Colors.gradient2}
             style={{
                 flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
             }}
             locations={time % 2 === 0 ? Location.gradient1 : Location.gradient2}
         >
-            <Button
-                onPress={() => {
-                    setTime(prev => prev + 1)
-                }}
-                title="색 바꾸기"
+            <Header
+                todayGage={screen.width * 0.895 * (totalStep / 10000)}
+                totalGage={screen.width * 0.895}
+                todayStep={totalStep}
+                totalCaloring={100}
             />
-            <Image source={require('../../../assets/test.gif')} />
             <Text style={{ fontSize: 30 }}>{totalStep} Steps</Text>
-            <Text style={{ fontSize: 30 }}>Past Steps : {pastStep}</Text>
             <Button
                 onPress={() => {
                     props.navigation.navigate('FriendList')

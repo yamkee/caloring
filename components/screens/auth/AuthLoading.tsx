@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { View, ActivityIndicator } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
+import { googleFit } from '../../../functions/googleFit'
 
 export default function AuthLoading(props: any) {
     useEffect(() => {
@@ -9,8 +10,8 @@ export default function AuthLoading(props: any) {
 
     const tokenCheck = async () => {
         const userToken = await AsyncStorage.getItem('userToken')
-
-        props.navigation.navigate(userToken ? 'App' : 'SignUp')
+        await googleFit()
+        props.navigation.navigate(!userToken ? 'App' : 'SignIn')
     }
 
     return (

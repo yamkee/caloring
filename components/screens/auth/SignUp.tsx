@@ -4,7 +4,6 @@ import {
     Keyboard,
     TouchableWithoutFeedback,
 } from 'react-native'
-import styled from 'styled-components/native'
 
 import SignUpForm from '../../organisms/auth/signUp/SignUpForm'
 import Colors from '../../../constants/Colors'
