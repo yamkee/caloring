@@ -14,9 +14,8 @@ export const googleFit = async () => {
             }
         )
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-            console.log('You can use the camera')
         } else {
-            console.log('Camera permission denied')
+            console.log('location permission denied')
         }
     } catch (err) {
         console.warn(err)
@@ -37,14 +36,15 @@ export const googleFit = async () => {
 }
 
 export const getStep = (set: any) => {
+    const timezoneOffset = new Date().getTimezoneOffset() * 60000
+    const timezoneDate = new Date(Date.now() - timezoneOffset)
+
     const options = {
         startDate: new Date(
-            new Date().setDate(new Date().getDate() - 2)
+            new Date().setDate(new Date().getDate() - 6)
         ).toISOString(),
-        endDate: new Date().toISOString(),
+        endDate: timezoneDate.toISOString(),
     }
-    let step = 0
-
     GoogleFit.getDailyStepCountSamples(options, (isError, result) => {
         if (!isError) {
             result.map(res => {

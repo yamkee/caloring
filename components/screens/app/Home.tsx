@@ -22,6 +22,7 @@ export default function Home(props: any) {
     const [pastStep, setPastStep] = useState(0)
     const [totalStep, setTotalStep] = useState(0)
     const [time, setTime] = useState(0)
+    const [totalCaloring, setTotalCaloring] = useState(660)
 
     useEffect(() => {
         AppState.addEventListener('change', _handleAppStateChange)
@@ -75,10 +76,12 @@ export default function Home(props: any) {
             locations={time % 2 === 0 ? Location.gradient1 : Location.gradient2}
         >
             <Header
-                todayGage={screen.width * 0.895 * (totalStep / 10000)}
-                totalGage={screen.width * 0.895}
-                todayStep={totalStep}
-                totalCaloring={100}
+                energyGage={
+                    screen.width * 0.895 * ((totalCaloring % 200) / 200)
+                }
+                totalGage={(screen.width * 0.895 * 250) / 800}
+                energy={totalCaloring % 200}
+                totalCaloring={totalCaloring}
             />
             <Text style={{ fontSize: 30 }}>{totalStep} Steps</Text>
             <Button

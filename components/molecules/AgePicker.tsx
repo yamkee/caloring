@@ -17,7 +17,6 @@ const Wrapper = styled.View({
 export default (props: any) => {
     const [age, setAge] = useState()
     useEffect(() => {
-        // console.log(age)
         props.setAge(age)
     }, [age])
     return (

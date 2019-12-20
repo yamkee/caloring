@@ -7,6 +7,7 @@ import dp from '../../constants/Dp'
 import * as screen from '../../constants/Dimensions'
 import Text from '../atoms/Text'
 import Colors from '../../constants/Colors'
+import GageBar from './gage-bar'
 
 export default (props: any) => {
     return (
@@ -24,14 +25,21 @@ export default (props: any) => {
                     {`${props.leftNumber}/${props.rightNumber}`}
                 </Text>
             </Label>
-            <Gage>
-                <State
-                    colors={Colors.totalGradient}
-                    start={[0, 0]}
-                    end={[1, 0]}
-                    width={props.gage}
+            {props.label === 'TOTAL' ? (
+                <GageBar
+                    level={(props.leftNumber / 200).toFixed(0)}
+                    gage={(props.leftNumber % 200) / 2}
                 />
-            </Gage>
+            ) : (
+                <Gage>
+                    <State
+                        colors={Colors.totalGradient}
+                        start={[0, 0]}
+                        end={[1, 0]}
+                        width={props.gage}
+                    />
+                </Gage>
+            )}
         </Wrapper>
     )
 }

@@ -1,5 +1,4 @@
 import React from 'react'
-import {} from 'react-native'
 import styled from 'styled-components/native'
 
 import Status from '../../molecules/status'
@@ -9,10 +8,10 @@ export default (props: any) => {
     return (
         <Wrapper>
             <Status
-                label="TODAY"
-                gage={props.todayGage}
-                leftNumber={props.todayStep}
-                rightNumber={10000}
+                label="ENERGY"
+                gage={props.energyGage}
+                leftNumber={props.energy}
+                rightNumber={200}
             />
             <Status
                 label="TOTAL"
