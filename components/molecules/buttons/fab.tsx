@@ -1,28 +1,39 @@
 import React from 'react'
-import { TouchableOpacity } from 'react-native'
-import styled from 'styled-components/native'
+import ActionButton from 'react-native-action-button'
 
-import dp from 'constants/Dp'
-import * as screen from 'constants/Dimensions'
-import Colors from 'constants/Colors'
+import Leaf from '../../atoms/icons/leaf'
+import Colors from '../../../constants/Colors'
+import Graph from '../../atoms/icons/graph'
+import dp from '../../../constants/Dp'
 
 export default (props: any) => {
     return (
-        <Wrapper>
-            <Button onPress={() => {}} />
-        </Wrapper>
+        <ActionButton
+            buttonColor={Colors.main}
+            renderIcon={() => {
+                return (
+                    <Leaf width={21.489} height={29.706} fill={Colors.white} />
+                )
+            }}
+            size={dp(15.2)}
+            fixNativeFeedbackRadius
+        >
+            <ActionButton.Item
+                buttonColor={Colors.main}
+                onPress={() => {
+                    props.navigation.navigate('MyRecord')
+                }}
+            >
+                <Graph width={21} height={21} fill={Colors.white} />
+            </ActionButton.Item>
+            <ActionButton.Item
+                buttonColor={Colors.main}
+                onPress={() => {
+                    props.navigation.navigate('FriendList')
+                }}
+            >
+                <Graph width={21} height={21} fill={Colors.white} />
+            </ActionButton.Item>
+        </ActionButton>
     )
 }
-
-const Wrapper = styled.View({
-    width: screen.width * 0.5,
-    height: screen.height * 0.4,
-    backgroundColor: 'transparent',
-})
-
-const Button = styled(TouchableOpacity)({
-    width: dp(15.2),
-    height: dp(15.2),
-    borderRadius: dp(15.2) / 2,
-    backgroundColor: Colors.white,
-})

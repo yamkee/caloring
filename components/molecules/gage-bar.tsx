@@ -6,6 +6,9 @@ import * as screen from '../../constants/Dimensions'
 import Colors from '../../constants/Colors'
 import Circle from '../atoms/circle'
 
+const width = screen.width * 0.61
+const lineWidth = (width - dp(6) * 5) / 4
+
 export default (props: any) => {
     const { level, gage } = props
     const [percent, setPercent] = useState([0, 0, 0, 0])
@@ -49,21 +52,24 @@ export default (props: any) => {
     )
 }
 const Wrapper = styled.View({
-    width: screen.width * 0.911,
+    width: width,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    alignSelf: 'center',
+    marginTop: dp(2),
 })
 
 const Line = styled.View<LineProps>(props => ({
-    width: ((screen.width * 0.911 - dp(5.2) * 5) / 4) * props.gage,
-    height: dp(1.5) / 2,
+    width: lineWidth * props.gage,
+    height: dp(3) / 2,
     backgroundColor: Colors.main,
+    opacity: 1,
 }))
 
 const LineWrapper = styled.View({
-    width: (screen.width * 0.911 - dp(5.2) * 5) / 4,
-    height: dp(1.5) / 2,
+    width: lineWidth,
+    height: dp(3) / 2,
     backgroundColor: Colors.white,
     opacity: 0.6,
 })

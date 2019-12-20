@@ -18,9 +18,9 @@ interface CircleProps {
 }
 
 const Circle = styled.View<CircleProps>(props => ({
-    width: dp(5.2),
-    height: dp(5.2),
-    borderRadius: dp(5.2) / 2,
+    width: dp(6),
+    height: dp(6),
+    borderRadius: dp(6) / 2,
     backgroundColor: props.fill ? Colors.main : Colors.white,
     opacity: props.fill ? 1 : 0.6,
     justifyContent: 'center',
@@ -28,9 +28,9 @@ const Circle = styled.View<CircleProps>(props => ({
 }))
 
 const InnerCircle = styled.View({
-    width: dp(3.7),
-    height: dp(3.7),
-    borderRadius: dp(3.7) / 2,
+    width: dp(3),
+    height: dp(3),
+    borderRadius: dp(3) / 2,
     backgroundColor: Colors.white,
     opacity: 0.8,
 })

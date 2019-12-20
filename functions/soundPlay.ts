@@ -2,7 +2,7 @@ import SoundPlayer from 'react-native-sound-player'
 
 export const soundPlay = () => {
     try {
-        SoundPlayer.playSoundFile('i', 'mp3')
+        SoundPlayer.playSoundFile('bgm', 'mp3')
     } catch (e) {
         alert('Cannot play the file')
         console.log('cannot play the song file', e)

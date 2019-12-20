@@ -12,6 +12,8 @@ import { getStep } from '../../../functions/googleFit'
 import { stopPlaying, soundPlay } from '../../../functions/soundPlay'
 import Header from '../../organisms/home/header'
 import * as screen from '../../../constants/Dimensions'
+import Leaf from '../../atoms/icons/leaf'
+import ActionButton from '../../molecules/buttons/fab'
 
 let pedometerSubscription: any
 let musicSubscription: any
@@ -48,7 +50,7 @@ export default function Home(props: any) {
             'FinishedPlaying',
             ({ success }) => {
                 if (success) {
-                    SoundPlayer.playSoundFile('i', 'mp3')
+                    SoundPlayer.playSoundFile('bgm', 'mp3')
                 }
             }
         )
@@ -84,24 +86,7 @@ export default function Home(props: any) {
                 totalCaloring={totalCaloring}
             />
             <Text style={{ fontSize: 30 }}>{totalStep} Steps</Text>
-            <Button
-                onPress={() => {
-                    props.navigation.navigate('FriendList')
-                }}
-                title="친구 목록 보기"
-            />
-            <Button
-                onPress={() => {
-                    props.navigation.navigate('MyRecord')
-                }}
-                title="기록 보기"
-            />
-            <Button
-                onPress={() => {
-                    props.navigation.navigate('Notifications')
-                }}
-                title="알림 보기"
-            />
+            <ActionButton navigation={props.navigation} />
         </LinearGradient>
     )
 }
