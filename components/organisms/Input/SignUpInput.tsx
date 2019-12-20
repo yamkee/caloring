@@ -87,6 +87,8 @@ export default (props: any) => {
 
     useEffect(() => {
         props.isValid(formState.formIsValid)
+        props.getNick(formState.values.nickname)
+        props.getPwd(formState.values.password)
     }, [formState])
 
     return (

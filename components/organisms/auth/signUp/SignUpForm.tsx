@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/native'
+import { useDispatch } from 'react-redux'
+import { Alert } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
 
 import * as screen from '../../../../constants/Dimensions'
 import Colors from '../../../../constants/Colors'
@@ -12,6 +15,8 @@ import SubTitle from './SubTitle'
 import AgePicker from '../../../molecules/AgePicker'
 import Checkbox from '../../../molecules/checkboxs/default-checkbox'
 import { googleFit } from '../../../../functions/googleFit'
+import { signUp } from '../../../../functions/auth'
+import * as userDataAction from '../../../../store/actions/userData'
 
 const Wrapper = styled.View({
     width: screen.width,
@@ -23,15 +28,23 @@ const Wrapper = styled.View({
 
 export default (props: any) => {
     const [age, setAge] = useState()
-    const [gender, setGender] = useState()
+    const [gender, setGender] = useState(2)
     const [formValid, setFormValid] = useState()
     const [agree, setAgree] = useState(false)
+    const [nickname, setNickname] = useState()
+    const [password, setPassword] = useState()
+    const dispatch = useDispatch()
+
     return (
         <Wrapper>
             <SubTitle />
-            <SignUpInput isValid={(isVal: boolean) => setFormValid(isVal)} />
+            <SignUpInput
+                isValid={(isVal: boolean) => setFormValid(isVal)}
+                getNick={nick => setNickname(nick)}
+                getPwd={pwd => setPassword(pwd)}
+            />
             <GenderSelect
-                onPress={(gen: string) => {
+                onPress={(gen: number) => {
                     setGender(gen)
                 }}
                 style={{ marginBottom: screen.height * 0.047 }}
@@ -53,14 +66,48 @@ export default (props: any) => {
             <RoundButton
                 title="다음"
                 onPress={async () => {
-                    if (agree && age && gender && formValid) {
-                        await googleFit()
-                        props.navigation.navigate('Home')
+                    if (agree && age && gender !== 2 && formValid) {
+                        const userData = await signUp({
+                            nickname,
+                            password,
+                            age,
+                            gender,
+                        })
+                        if (userData.message === 'duplicate id') {
+                            Alert.alert(
+                                '닉네임중복',
+                                '다른 닉네임을 사용해주세요',
+                                [
+                                    {
+                                        text: 'OK',
+                                    },
+                                ]
+                            )
+                        } else {
+                            dispatch(
+                                userDataAction.saveData(
+                                    nickname,
+                                    userData.total_caloring,
+                                    userData.level,
+                                    userData.exercising
+                                )
+                            )
+                            try {
+                                await AsyncStorage.setItem(
+                                    'userId',
+                                    userData.user_id.toString()
+                                )
+                            } catch (error) {
+                                // Error saving data
+                            }
+                            await googleFit()
+                            props.navigation.navigate('Home')
+                        }
                     }
                 }}
                 textColor="white"
                 color={
-                    agree && age && gender && formValid
+                    agree && age && gender !== 2 && formValid
                         ? Colors.main
                         : '#cbc9c9'
                 }

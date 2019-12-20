@@ -41,7 +41,7 @@ export const getStep = (set: any) => {
 
     const options = {
         startDate: new Date(
-            new Date().setDate(new Date().getDate() - 6)
+            new Date().setDate(new Date().getDate() - 5) - timezoneOffset
         ).toISOString(),
         endDate: timezoneDate.toISOString(),
     }
@@ -49,6 +49,9 @@ export const getStep = (set: any) => {
         if (!isError) {
             result.map(res => {
                 if (res.source === 'com.google.android.gms:estimated_steps') {
+                    console.log(options.endDate)
+                    console.log(res.steps)
+                    console.log(options.startDate)
                     const ldx = res.steps.length
                     if (ldx === 0) {
                     } else {

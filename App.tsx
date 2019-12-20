@@ -4,10 +4,10 @@ import { Provider } from 'react-redux'
 import ReduxThunk from 'redux-thunk'
 
 import Navigator from './navigators/MainNavigator'
-import background from './store/reducers/subscriptions'
+import userData from './store/reducers/userData'
 
 const rootReducer = combineReducers({
-    background: background,
+    userData: userData,
 })
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk))

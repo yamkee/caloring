@@ -12,7 +12,7 @@ export default (props: any) => {
         <Wrapper style={props.style}>
             <RoundButton
                 onPress={() => {
-                    props.onPress('남')
+                    props.onPress(0)
                     setSelected(0)
                 }}
                 width={screen.width * 0.436}
@@ -24,7 +24,7 @@ export default (props: any) => {
             />
             <RoundButton
                 onPress={() => {
-                    props.onPress('여')
+                    props.onPress(1)
                     setSelected(1)
                 }}
                 width={screen.width * 0.436}

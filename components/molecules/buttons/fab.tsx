@@ -5,6 +5,7 @@ import Leaf from '../../atoms/icons/leaf'
 import Colors from '../../../constants/Colors'
 import Graph from '../../atoms/icons/graph'
 import dp from '../../../constants/Dp'
+import AttackIcon from '../../atoms/icons/attack-button'
 
 export default (props: any) => {
     return (
@@ -32,7 +33,7 @@ export default (props: any) => {
                     props.navigation.navigate('FriendList')
                 }}
             >
-                <Graph width={21} height={21} fill={Colors.white} />
+                <AttackIcon width={23} height={32} fill={Colors.white} />
             </ActionButton.Item>
         </ActionButton>
     )

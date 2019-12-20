@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react'
-import { Image, AppState, AppStateStatus } from 'react-native'
+import { Image, AppState, AppStateStatus, ImageBackground } from 'react-native'
 import { Pedometer } from 'expo-sensors'
 import { LinearGradient } from 'expo-linear-gradient'
 import SoundPlayer from 'react-native-sound-player'
+import styled from 'styled-components/native'
+import { useSelector, useDispatch } from 'react-redux'
 
+import Leaf from '../../atoms/icons/leaf'
+import Button from '../../molecules/buttons/default-button'
 import Text from '../../atoms/Text'
 import Colors from '../../../constants/Colors'
-import Button from '../../molecules/buttons/default-button'
 import Location from '../../../constants/Location'
 import { getStep } from '../../../functions/googleFit'
 import { stopPlaying, soundPlay } from '../../../functions/soundPlay'
 import Header from '../../organisms/home/header'
 import * as screen from '../../../constants/Dimensions'
-import Leaf from '../../atoms/icons/leaf'
 import ActionButton from '../../molecules/buttons/fab'
 
 let pedometerSubscription: any
@@ -24,7 +26,11 @@ export default function Home(props: any) {
     const [pastStep, setPastStep] = useState(0)
     const [totalStep, setTotalStep] = useState(0)
     const [time, setTime] = useState(0)
-    const [totalCaloring, setTotalCaloring] = useState(660)
+    const [totalCaloring, setTotalCaloring] = useState(
+        useSelector((state: any) => state.userData.totalCaloring)
+    )
+    const dispatch = useDispatch()
+    const userData = useSelector((state: any) => state.userData)
 
     useEffect(() => {
         AppState.addEventListener('change', _handleAppStateChange)
@@ -77,16 +83,35 @@ export default function Home(props: any) {
             }}
             locations={time % 2 === 0 ? Location.gradient1 : Location.gradient2}
         >
-            <Header
-                energyGage={
-                    screen.width * 0.895 * ((totalCaloring % 200) / 200)
-                }
-                totalGage={(screen.width * 0.895 * 250) / 800}
-                energy={totalCaloring % 200}
-                totalCaloring={totalCaloring}
-            />
-            <Text style={{ fontSize: 30 }}>{totalStep} Steps</Text>
-            <ActionButton navigation={props.navigation} />
+            <ImageBackground
+                source={require('../../../assets/twingkle2.gif')}
+                style={{ width: '100%', height: '100%' }}
+            >
+                <Header
+                    energyGage={
+                        screen.width * 0.895 * ((totalCaloring % 200) / 200)
+                    }
+                    totalGage={(screen.width * 0.895 * 250) / 800}
+                    energy={totalCaloring % 200}
+                    totalCaloring={totalCaloring}
+                />
+                <Text>{userData.nickname}</Text>
+                <ImageWrapper>
+                    <Image
+                        source={require('../../../assets/main4.png')}
+                        style={{ width: 411, height: (306 * 411) / 360 }}
+                    />
+                </ImageWrapper>
+                <Text level={5}>{totalStep}</Text>
+                <ActionButton navigation={props.navigation} />
+            </ImageBackground>
         </LinearGradient>
     )
 }
+
+const ImageWrapper = styled.View({
+    width: '100%',
+    marginTop: screen.height * 0.16,
+    alignItems: 'center',
+    justifyContent: 'center',
+})
