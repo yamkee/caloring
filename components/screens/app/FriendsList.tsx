@@ -1,32 +1,20 @@
-import React, { useState, useEffect } from 'react'
-import { View, Dimensions, PixelRatio } from 'react-native'
+import React from 'react'
 import styled from 'styled-components/native'
 
-import Text from '../../atoms/Text'
-import * as screen from '../../../constants/Dimensions'
+import Header from '../../organisms/friendsList/header'
+import Colors from '../../../constants/Colors'
+import List from '../../organisms/friendsList/list'
 
 export default function FriendList(props: any) {
     return (
         <Screen>
-            <Header />
-            <List></List>
+            <Header navigation={props.navigation} />
+            <List />
         </Screen>
     )
 }
 
 const Screen = styled.View({
     flex: 1,
-})
-
-const Header = styled.View({
-    width: screen.width,
-    height: screen.height * 0.1,
-    backgroundColor: '#f67280',
-})
-
-const List = styled.View({
-    width: screen.width,
-    height: screen.height * 0.9,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
+    backgroundColor: Colors.main,
 })
