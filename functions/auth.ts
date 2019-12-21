@@ -32,3 +32,22 @@ export const signUp = async (data: signUpData) => {
     const userData = await res.json()
     return userData
 }
+
+export const autoLogin = async (userId: string) => {
+    const res = await fetch('https://d16nav0m28xkxy.cloudfront.net/autoLogin', {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            user_id: parseInt(userId),
+        }),
+    })
+    console.log(res)
+    if (!res.ok) {
+        console.log('response error')
+    }
+    const userData = await res.json()
+    return userData
+}

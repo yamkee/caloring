@@ -6,8 +6,6 @@ import SoundPlayer from 'react-native-sound-player'
 import styled from 'styled-components/native'
 import { useSelector, useDispatch } from 'react-redux'
 
-import Leaf from '../../atoms/icons/leaf'
-import Button from '../../molecules/buttons/default-button'
 import Text from '../../atoms/Text'
 import Colors from '../../../constants/Colors'
 import Location from '../../../constants/Location'
@@ -16,6 +14,9 @@ import { stopPlaying, soundPlay } from '../../../functions/soundPlay'
 import Header from '../../organisms/home/header'
 import * as screen from '../../../constants/Dimensions'
 import ActionButton from '../../molecules/buttons/fab'
+import TreeImage from '../../molecules/tree-image'
+import TodayStep from '../../organisms/home/today-step'
+import Content from '../../organisms/home/content'
 
 let pedometerSubscription: any
 let musicSubscription: any
@@ -31,6 +32,7 @@ export default function Home(props: any) {
     )
     const dispatch = useDispatch()
     const userData = useSelector((state: any) => state.userData)
+    const { level } = userData
 
     useEffect(() => {
         AppState.addEventListener('change', _handleAppStateChange)
@@ -77,11 +79,11 @@ export default function Home(props: any) {
 
     return (
         <LinearGradient
-            colors={time % 2 === 0 ? Colors.gradient1 : Colors.gradient2}
+            colors={['#62a9b2', '#b2bdbb', '#d1c5be', '#bfc2bd', '#8ebabb']}
             style={{
                 flex: 1,
             }}
-            locations={time % 2 === 0 ? Location.gradient1 : Location.gradient2}
+            locations={[0, 0.34, 0.58, 0.77, 1]}
         >
             <ImageBackground
                 source={require('../../../assets/twingkle2.gif')}
@@ -95,14 +97,22 @@ export default function Home(props: any) {
                     energy={totalCaloring % 200}
                     totalCaloring={totalCaloring}
                 />
-                <Text>{userData.nickname}</Text>
                 <ImageWrapper>
-                    <Image
-                        source={require('../../../assets/main4.png')}
-                        style={{ width: 411, height: (306 * 411) / 360 }}
-                    />
+                    <TreeImage level={4}>
+                        <Content navigation={props.navigation} />
+                    </TreeImage>
                 </ImageWrapper>
-                <Text level={5}>{totalStep}</Text>
+                <TodayStep />
+                <Text
+                    level={6}
+                    style={{
+                        alignSelf: 'center',
+                    }}
+                    color="white"
+                    font="roboto"
+                >
+                    {totalStep}
+                </Text>
                 <ActionButton navigation={props.navigation} />
             </ImageBackground>
         </LinearGradient>
@@ -111,7 +121,7 @@ export default function Home(props: any) {
 
 const ImageWrapper = styled.View({
     width: '100%',
-    marginTop: screen.height * 0.16,
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: screen.height * 0.1,
 })

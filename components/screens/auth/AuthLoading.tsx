@@ -1,9 +1,15 @@
 import React, { useEffect } from 'react'
 import { View, ActivityIndicator } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
+import { useDispatch } from 'react-redux'
+
 import { googleFit } from '../../../functions/googleFit'
+import { autoLogin } from '../../../functions/auth'
+import * as userDataAction from '../../../store/actions/userData'
 
 export default function AuthLoading(props: any) {
+    const dispatch = useDispatch()
+
     useEffect(() => {
         // AsyncStorage.removeItem('userId')
         tokenCheck()
@@ -12,6 +18,16 @@ export default function AuthLoading(props: any) {
     const tokenCheck = async () => {
         const userToken = await AsyncStorage.getItem('userId')
         if (userToken) {
+            // const res = await autoLogin(userToken)
+            // console.log(res)
+            // dispatch(
+            //     userDataAction.saveData(
+            //         res.name,
+            //         res.total_caloring,
+            //         res.level,
+            //         res.exercising
+            //     )
+            // )
             await googleFit()
             props.navigation.navigate('App')
         } else {
