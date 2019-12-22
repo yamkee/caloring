@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components/native'
 import { LinearGradient } from 'expo-linear-gradient'
 
@@ -9,31 +9,33 @@ const max = screen.height * 0.196
 const barWidth = screen.width * 0.044
 
 export default (props: any) => {
-    const { data } = props
-    useEffect(() => {
-        console.log(data)
-    }, [data])
-    return (
-        <Wrapper>
-            <Bar
-                colors={Colors.gradient0}
-                style={{ marginLeft: barWidth * 0.5 }}
-                height={0.3}
-            />
-            <Bar colors={Colors.gradient0} height={0.3} />
-            <Bar colors={Colors.gradient0} height={0.3} />
-            <Bar colors={Colors.gradient0} height={0.3} />
-            <Bar colors={Colors.gradient0} height={0.3} />
-            <Bar colors={Colors.gradient0} height={0.3} />
-            <Bar colors={Colors.gradient0} height={0.3} />
-            <Line height={0} />
-            <Line height={0.2} />
-            <Line height={0.4} />
-            <Line height={0.6} />
-            <Line height={0.8} />
-            <Line height={1} />
-        </Wrapper>
-    )
+    const { step } = props
+
+    if (!step) {
+        return <></>
+    } else {
+        return (
+            <Wrapper>
+                <Bar
+                    colors={Colors.gradient0}
+                    style={{ marginLeft: barWidth * 0.5 }}
+                    height={step[0]}
+                />
+                <Bar colors={Colors.gradient0} height={step[1]} />
+                <Bar colors={Colors.gradient0} height={step[2]} />
+                <Bar colors={Colors.gradient0} height={step[3]} />
+                <Bar colors={Colors.gradient0} height={step[4]} />
+                <Bar colors={Colors.gradient0} height={step[5]} />
+                <Bar colors={Colors.gradient0} height={step[6]} />
+                <Line height={0} />
+                <Line height={0.2} />
+                <Line height={0.4} />
+                <Line height={0.6} />
+                <Line height={0.8} />
+                <Line height={1} />
+            </Wrapper>
+        )
+    }
 }
 
 const Wrapper = styled.View({
@@ -59,5 +61,5 @@ const Line = styled.View<LineType>(props => ({
 }))
 
 type LineType = {
-    height: number
+    height: any
 }

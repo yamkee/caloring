@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/native'
 
-import * as screen from '../../../constants/Dimensions'
 import Text from '../../atoms/Text'
 import { getWeekStep } from '../../../functions/googleFit'
 import Graph from './graph'
@@ -16,6 +15,7 @@ export default (props: any) => {
     const [year, setYear] = useState()
     const [date, setDate] = useState()
     const [month, setMonth] = useState()
+    const [st, setSt] = useState(false)
     useEffect(() => {
         getWeekStep(setData)
     }, [])
@@ -34,6 +34,7 @@ export default (props: any) => {
             data.map((v, i) => {
                 steps[i] = v.value / 10000
             })
+            setSt(true)
         }
     }, [data])
 
@@ -47,7 +48,7 @@ export default (props: any) => {
             ) : (
                 <></>
             )}
-            {steps ? <Graph data={steps} /> : <></>}
+            {st && <Graph step={steps} />}
         </Wrapper>
     )
 }

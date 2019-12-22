@@ -5,6 +5,7 @@ import * as screen from '../../../constants/Dimensions'
 import Bubble from '../../molecules/speech-bubble/default-speech-bubble'
 import IconCircleButton from '../../molecules/buttons/icon-circle-button'
 import FreindsIcon from '../../atoms/icons/friends'
+import NotifyIcon from '../../atoms/icons/notification'
 import dpHandler from '../../../constants/Dp'
 
 type Bubble = {
@@ -34,7 +35,16 @@ export default (props: any) => {
                     rad={screen.width * 0.05}
                     color="grey"
                     opacity={0.8}
-                ></IconCircleButton>
+                    onPress={() => {
+                        props.navigation.navigate('Notifications')
+                    }}
+                >
+                    <NotifyIcon
+                        width={dpHandler(5.2)}
+                        height={dpHandler(5.2)}
+                        fill="white"
+                    />
+                </IconCircleButton>
                 <IconCircleButton
                     rad={screen.width * 0.05}
                     color="grey"

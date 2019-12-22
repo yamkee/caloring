@@ -29,7 +29,6 @@ export const signUp = async (data: signUpData) => {
             gender: data.gender,
         }),
     })
-    console.log(res)
     if (!res.ok) {
         console.log('response error')
     }
@@ -48,7 +47,6 @@ export const autoLogin = async (userId: string) => {
             user_id: parseInt(userId),
         }),
     })
-    console.log(res)
     if (!res.ok) {
         console.log('response error')
     }
@@ -76,7 +74,6 @@ export const logIn = async (data: logInData) => {
             gender: 0,
         }),
     })
-    console.log(res)
     if (!res.ok) {
         console.log('response error')
     }

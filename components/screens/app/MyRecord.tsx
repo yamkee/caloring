@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components/native'
 import { LinearGradient } from 'expo-linear-gradient'
 
-import Text from '../../atoms/Text'
 import Colors from '../../../constants/Colors'
 import Header from '../../organisms/myrecord/header'
 import Content from '../../organisms/myrecord/content'

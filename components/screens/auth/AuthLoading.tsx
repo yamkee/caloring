@@ -19,7 +19,6 @@ export default function AuthLoading(props: any) {
         const userToken = await AsyncStorage.getItem('userId')
         if (userToken) {
             const res = await autoLogin(userToken)
-            console.log(res)
             dispatch(
                 userDataAction.saveData(
                     res.name,

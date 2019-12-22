@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Image, AppState, AppStateStatus, ImageBackground } from 'react-native'
+import { AppState, AppStateStatus, ImageBackground } from 'react-native'
 import { Pedometer } from 'expo-sensors'
 import { LinearGradient } from 'expo-linear-gradient'
 import SoundPlayer from 'react-native-sound-player'
@@ -7,8 +7,6 @@ import styled from 'styled-components/native'
 import { useSelector, useDispatch } from 'react-redux'
 
 import Text from '../../atoms/Text'
-import Colors from '../../../constants/Colors'
-import Location from '../../../constants/Location'
 import { getStep } from '../../../functions/googleFit'
 import { stopPlaying, soundPlay } from '../../../functions/soundPlay'
 import Header from '../../organisms/home/header'
@@ -17,6 +15,7 @@ import ActionButton from '../../molecules/buttons/fab'
 import TreeImage from '../../molecules/tree-image'
 import TodayStep from '../../organisms/home/today-step'
 import Content from '../../organisms/home/content'
+import { updateExercising } from '../../../functions/exercising'
 
 let pedometerSubscription: any
 let musicSubscription: any
@@ -103,16 +102,26 @@ export default function Home(props: any) {
                     </TreeImage>
                 </ImageWrapper>
                 <TodayStep />
-                <Text
-                    level={6}
-                    style={{
-                        alignSelf: 'center',
+                <Button
+                    onPress={async () => {
+                        const res = await updateExercising(
+                            totalStep,
+                            level,
+                            totalCaloring
+                        )
                     }}
-                    color="white"
-                    font="roboto"
                 >
-                    {totalStep}
-                </Text>
+                    <Text
+                        level={6}
+                        style={{
+                            alignSelf: 'center',
+                        }}
+                        color="white"
+                        font="roboto"
+                    >
+                        {totalStep}
+                    </Text>
+                </Button>
                 <ActionButton navigation={props.navigation} />
             </ImageBackground>
         </LinearGradient>
@@ -124,4 +133,8 @@ const ImageWrapper = styled.View({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: screen.height * 0.1,
+})
+const Button = styled.TouchableOpacity({
+    alignSelf: 'center',
+    width: '20%',
 })

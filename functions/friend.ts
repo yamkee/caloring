@@ -12,7 +12,6 @@ export const fetchFriends = async () => {
             user_id: parseInt(userId),
         }),
     })
-    console.log(res)
     if (!res.ok) {
         console.log('response error')
     }
@@ -34,7 +33,6 @@ export const findFriends = async (nickname: string) => {
             }),
         }
     )
-    console.log(res)
     if (!res.ok) {
         console.log('response error')
     }
@@ -58,7 +56,6 @@ export const addFriends = async (friendId: number) => {
             }),
         }
     )
-    console.log(res)
     if (!res.ok) {
         console.log('response error')
     }
@@ -82,7 +79,6 @@ export const deleteFriend = async (friendId: number) => {
             }),
         }
     )
-    console.log(res)
     if (!res.ok) {
         console.log('response error')
     }
@@ -110,7 +106,6 @@ export const attackFriend = async (friendId: number, exercising: number) => {
             }),
         }
     )
-    console.log(res)
     if (!res.ok) {
         console.log('response error')
     }
