@@ -23,6 +23,8 @@ const fontSizeHandler = (level: number) => {
         case 5:
             return Dp(4.5)
         case 6:
+            return Dp(10)
+        case 7:
             return Dp(11.8)
         default:
             return Dp(3.5)

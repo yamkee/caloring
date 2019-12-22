@@ -41,7 +41,7 @@ export const getStep = (set: any) => {
 
     const options = {
         startDate: new Date(
-            new Date().setDate(new Date().getDate() - 5) - timezoneOffset
+            new Date().setDate(new Date().getDate() - 3) - timezoneOffset
         ).toISOString(),
         endDate: timezoneDate.toISOString(),
     }
@@ -49,14 +49,38 @@ export const getStep = (set: any) => {
         if (!isError) {
             result.map(res => {
                 if (res.source === 'com.google.android.gms:estimated_steps') {
-                    console.log(options.endDate)
-                    console.log(res.steps)
-                    console.log(options.startDate)
                     const ldx = res.steps.length
                     if (ldx === 0) {
                     } else {
                         set(res.steps[ldx - 1].value)
                     }
+                }
+            })
+        } else {
+            console.log(isError)
+        }
+    })
+}
+
+export const getWeekStep = (set: any) => {
+    const timezoneOffset = new Date().getTimezoneOffset() * 60000
+    const timezoneDate = new Date(Date.now() - timezoneOffset)
+
+    const options = {
+        startDate: new Date(
+            new Date().setDate(new Date().getDate() - 7) - timezoneOffset
+        ).toISOString(),
+        endDate: timezoneDate.toISOString(),
+    }
+
+    GoogleFit.getDailyStepCountSamples(options, (isError, result) => {
+        if (!isError) {
+            result.map(res => {
+                if (res.source === 'com.google.android.gms:estimated_steps') {
+                    console.log(options.endDate)
+                    console.log(res.steps)
+                    console.log(options.startDate)
+                    set(res.steps)
                 }
             })
         } else {

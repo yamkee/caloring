@@ -12,4 +12,7 @@ export default {
     gradient1: ['#7d8ff0', '#e5bcde', '#fadacf'],
     gradient2: ['#907fa4', '#ffb09b', '#ffc91d'],
     totalGradient: ['#ffd883', '#ffb484'],
+    recordGradient: ['#f9bea8', '#ffe79a'],
+    recordBorder: '#FCB78B',
+    recordCircle: '#FCDDBB',
 }

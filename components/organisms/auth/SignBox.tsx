@@ -1,5 +1,8 @@
-import React, { useReducer, useEffect, useCallback } from 'react'
+import React, { useReducer, useCallback } from 'react'
+import { Alert } from 'react-native'
+import { useDispatch } from 'react-redux'
 import styled from 'styled-components/native'
+import AsyncStorage from '@react-native-community/async-storage'
 
 import TextInput from '../../molecules/TextInput'
 import RoundButton from '../../molecules/buttons/round'
@@ -7,6 +10,8 @@ import Button from '../../molecules/buttons/default-button'
 import * as Screen from '../../../constants/Dimensions'
 import Colors from '../../../constants/Colors'
 import { googleFit } from '../../../functions/googleFit'
+import { logIn } from '../../../functions/auth'
+import * as userDataAction from '../../../store/actions/userData'
 
 interface FormState {
     values: {
@@ -54,6 +59,7 @@ const formReducer = (state: FormState, action: ActionState) => {
 }
 
 export default function SignBox(props: any) {
+    const mainDispatch = useDispatch()
     const [formState, dispatch] = useReducer(formReducer, {
         values: {
             nickname: '',
@@ -98,8 +104,36 @@ export default function SignBox(props: any) {
                 title="로그인"
                 onPress={async () => {
                     if (formState.formIsValid) {
-                        await googleFit()
-                        props.navigation.navigate('Home')
+                        const userData = await logIn({
+                            nickname: formState.values.nickname,
+                            password: formState.values.password,
+                        })
+                        if (userData.message) {
+                            Alert.alert(
+                                '로그인 실패',
+                                '아이디와 비밀번호를 확인해주세요',
+                                [{ text: 'ok' }]
+                            )
+                        } else {
+                            mainDispatch(
+                                userDataAction.saveData(
+                                    formState.values.nickname,
+                                    userData.total_caloring,
+                                    userData.level,
+                                    userData.exercising
+                                )
+                            )
+                            try {
+                                await AsyncStorage.setItem(
+                                    'userId',
+                                    userData.user_id.toString()
+                                )
+                            } catch (error) {
+                                // Error saving data
+                            }
+                            await googleFit()
+                            props.navigation.navigate('Home')
+                        }
                     }
                 }}
                 textColor={
@@ -115,7 +149,7 @@ export default function SignBox(props: any) {
                     props.navigation.navigate('SignUp')
                 }}
                 style={{ marginTop: Screen.height * 0.023, elevation: 9 }}
-                textColor={Colors.white}
+                color={Colors.white}
             />
         </Box>
     )

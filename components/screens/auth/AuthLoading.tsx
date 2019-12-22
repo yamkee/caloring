@@ -11,7 +11,7 @@ export default function AuthLoading(props: any) {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        // AsyncStorage.removeItem('userId')
+        AsyncStorage.removeItem('userId')
         tokenCheck()
     }, [])
 
