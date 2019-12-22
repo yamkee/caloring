@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/native'
+import { useSelector } from 'react-redux'
 
 import Text from '../../atoms/Text'
 import dp from '../../../constants/Dp'
@@ -8,6 +9,7 @@ import Button from '../../molecules/buttons/round'
 import * as screen from '../../../constants/Dimensions'
 
 export default (props: any) => {
+    const exercising = useSelector((state: any) => state.userData.exercising)
     return (
         <Content>
             <Text
@@ -20,10 +22,10 @@ export default (props: any) => {
                 ATTACK NOTION
             </Text>
             <Text font="roboto" style={{ marginBottom: dp(4) }} color="black">
-                계유민님을 공격하시겠습니까?
+                {`${props.nick}님을 공격하시겠습니까?`}
             </Text>
             <Text color={Colors.lightCoral} font="roboto" weight={4}>
-                성장 경험치가 50% 감소함
+                {`성장 경험치가 ${exercising}% 감소함`}
             </Text>
             <ButtonContainer>
                 <Button
@@ -41,6 +43,7 @@ export default (props: any) => {
                     title="예"
                     onPress={() => {
                         props.setVisible(false)
+                        props.attack(exercising)
                     }}
                     width={screen.width * 0.342}
                     height={screen.height * 0.061}

@@ -8,15 +8,23 @@ import Colors from '../../../constants/Colors'
 import Text from '../../atoms/Text'
 import ListItem from '../../molecules/list-item'
 import AttackContent from './attack-content'
-import { fetchFriends } from '../../../functions/friend'
+import {
+    fetchFriends,
+    deleteFriend,
+    attackFriend,
+} from '../../../functions/friend'
 
 export default (props: any) => {
     const [visible, setVisible] = useState(false)
     const [res, setRes] = useState()
+    const [friendNick, setFriendNick] = useState()
+    const [friendToday, setFriendToday] = useState()
+    const [friendId, setFriendId] = useState()
 
     useEffect(() => {
         getData()
     }, [])
+
     const getData = async () => {
         const data = await fetchFriends()
         setRes(data)
@@ -46,9 +54,27 @@ export default (props: any) => {
                             expGage={v.total_caloring}
                             onPress={() => {
                                 setVisible(true)
+                                setFriendNick(v.name)
+                                setFriendToday(v.exercising)
+                                setFriendId(v.user_id)
                             }}
                             onLongPress={() => {
-                                Alert.alert('hi', 'h1', [{ text: 'ok' }])
+                                Alert.alert(
+                                    '친구 삭제',
+                                    '친구를 삭제하시겠습니까?',
+                                    [
+                                        {
+                                            text: 'ok',
+                                            onPress: async () => {
+                                                const res = await deleteFriend(
+                                                    parseInt(v.user_id)
+                                                )
+                                                getData()
+                                            },
+                                        },
+                                        { text: 'cancel' },
+                                    ]
+                                )
                             }}
                         />
                     ))
@@ -71,6 +97,15 @@ export default (props: any) => {
                             />
                         </Circle>
                         <AttackContent
+                            nick={friendNick}
+                            penalty={friendToday}
+                            attack={async exercising => {
+                                const res = await attackFriend(
+                                    friendId,
+                                    exercising
+                                )
+                                console.log(res)
+                            }}
                             setVisible={(v: boolean) => {
                                 setVisible(v)
                             }}

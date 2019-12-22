@@ -9,9 +9,9 @@ interface ButtonProps {
     style?: any
     level?: number
     color?: string
-    textColor?: string
     title?: string
     textStyle?: any
+    fontWeight?: number
 }
 
 export default (props: ButtonProps) => {
@@ -19,8 +19,9 @@ export default (props: ButtonProps) => {
         <Button onPress={props.onPress} style={props.style}>
             <Text
                 level={props.level}
-                color={props.textColor}
+                color={props.color}
                 style={props.textStyle}
+                weight={props.fontWeight}
             >
                 {props.title}
             </Text>
