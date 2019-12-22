@@ -44,7 +44,7 @@ export default (props: any) => {
         case 4:
             return (
                 <ImageBackground
-                    source={require('../../assets/default/4.png')}
+                    source={require('../../assets/penalty/4.png')}
                     style={{
                         width: screen.width,
                         height: (306 * screen.width) / 360,

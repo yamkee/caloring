@@ -18,16 +18,16 @@ export default function AuthLoading(props: any) {
     const tokenCheck = async () => {
         const userToken = await AsyncStorage.getItem('userId')
         if (userToken) {
-            // const res = await autoLogin(userToken)
-            // console.log(res)
-            // dispatch(
-            //     userDataAction.saveData(
-            //         res.name,
-            //         res.total_caloring,
-            //         res.level,
-            //         res.exercising
-            //     )
-            // )
+            const res = await autoLogin(userToken)
+            console.log(res)
+            dispatch(
+                userDataAction.saveData(
+                    res.name,
+                    res.total_caloring,
+                    res.level,
+                    res.exercising
+                )
+            )
             await googleFit()
             props.navigation.navigate('App')
         } else {

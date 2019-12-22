@@ -1,8 +1,13 @@
 export default {
     main: '#ffa996',
     defaultGrey: '#707070',
+    borderGrey: '#EFEFEF',
     error: '#ff6e39',
     white: '#ffffff',
+    coral: '#ff6e4e',
+    lightCoral: '#ffa089',
+    todayGage: ['#d0ccff', '#8c9dfd'],
+    expGage: ['#ffd984', '#ff9696'],
     gradient0: ['#ffe6ad', '#fdb6b6'],
     gradient1: ['#7d8ff0', '#e5bcde', '#fadacf'],
     gradient2: ['#907fa4', '#ffb09b', '#ffc91d'],

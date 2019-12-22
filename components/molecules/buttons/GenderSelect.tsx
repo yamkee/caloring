@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components/native'
 
-import RoundButton from '../buttons/round'
+import RoundButton from './round'
 import * as screen from '../../../constants/Dimensions'
 import Colors from '../../../constants/Colors'
 

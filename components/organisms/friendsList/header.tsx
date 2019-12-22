@@ -27,7 +27,11 @@ export default function Header(props: any) {
             <Text color={Colors.white} level={5}>
                 친구
             </Text>
-            <PlusButton onPress={() => {}}>
+            <PlusButton
+                onPress={() => {
+                    props.navigation.navigate('AddFriend')
+                }}
+            >
                 <PlusIcon
                     width={dp(3.5)}
                     height={dp(3.5)}
