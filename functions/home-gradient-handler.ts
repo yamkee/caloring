@@ -3,7 +3,6 @@ import Location from '../constants/Location'
 
 export const colorHandler = (penalty: boolean) => {
     const hour = new Date().getHours()
-    console.log(hour)
     if (penalty) {
         return Colors.penaltyGradient
     } else {

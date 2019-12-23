@@ -17,6 +17,7 @@ interface IProps {
     confirmText?: string
     isSignUp?: boolean
     isValid?: boolean
+    Text?: string
 }
 
 interface InputState {
@@ -87,7 +88,10 @@ export default (props: IProps) => {
         if (inputState.touched && !inputState.isValid) {
             return (
                 <ConfirmTextContainer>
-                    <Text color={Colors.error} level={1}>
+                    <Text
+                        color={props.Text ? Colors.defaultGrey : Colors.error}
+                        level={1}
+                    >
                         {props.errorText}
                     </Text>
                 </ConfirmTextContainer>
@@ -101,7 +105,17 @@ export default (props: IProps) => {
                 </ConfirmTextContainer>
             )
         } else {
-            return <ConfirmTextContainer />
+            if (props.Text) {
+                return (
+                    <ConfirmTextContainer>
+                        <Text color={Colors.defaultGrey} level={1}>
+                            {props.Text}
+                        </Text>
+                    </ConfirmTextContainer>
+                )
+            } else {
+                return <ConfirmTextContainer />
+            }
         }
     }
     return (

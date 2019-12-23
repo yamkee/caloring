@@ -12,6 +12,7 @@ import SignBox from '../../organisms/auth/SignBox'
 import * as screen from '../../../constants/Dimensions'
 import Text from '../../atoms/Text'
 import Colors from '../../../constants/Colors'
+import dpHandler from '../../../constants/Dp'
 
 export default function SignIn(props: any) {
     return (
@@ -25,17 +26,16 @@ export default function SignIn(props: any) {
                     keyboardVerticalOffset={0}
                 >
                     <ImageContainer>
-                        <Image source={require('../../../assets/Image1.png')} />
-                        <Text
-                            color={Colors.white}
-                            level={4}
-                            style={{ marginTop: screen.height * 0.03 }}
-                            font="roboto"
-                            weight={5}
-                        >
-                            WALK WITH
-                        </Text>
+                        <Image
+                            source={require('../../../assets/login/login.png')}
+                        />
+                        <LogoContainer>
+                            <Image
+                                source={require('../../../assets/logotext.png')}
+                            />
+                        </LogoContainer>
                     </ImageContainer>
+
                     <SignBox
                         navigation={props.navigation}
                         style={{ marginTop: screen.height * 0.02 }}
@@ -49,7 +49,11 @@ export default function SignIn(props: any) {
 const ImageContainer = styled.View({
     width: screen.width,
     height: screen.height * 0.59,
-    paddingBottom: screen.height * 0.127,
+    paddingBottom: screen.height * 0.05,
     alignItems: 'center',
     justifyContent: 'flex-end',
+})
+
+const LogoContainer = styled.View({
+    marginTop: screen.height * 0.05,
 })

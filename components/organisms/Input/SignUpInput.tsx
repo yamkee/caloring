@@ -98,8 +98,9 @@ export default (props: any) => {
                 onChange={onChnageInput}
                 value=""
                 placeholder="사용자 이름"
-                errorText="다른 사용자와 중복된 이름입니다."
-                confirmText="사용 가능한 이름입니다."
+                errorText="존재하는 닉네임은 사용 가능하지않습니다."
+                confirmText="존재하는 닉네임은 사용 가능하지않습니다."
+                Text="존재하는 닉네임은 사용 가능하지않습니다."
                 isValid
             />
             <TextInput
