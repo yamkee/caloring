@@ -6,6 +6,8 @@ import Colors from '../../../constants/Colors'
 import Header from '../../organisms/myrecord/header'
 import Content from '../../organisms/myrecord/content'
 import WeekData from '../../organisms/myrecord/week-data'
+import { ImageBackground } from 'react-native'
+import * as screen from '../../../constants/Dimensions'
 
 let weekStep = new Array()
 
@@ -38,9 +40,16 @@ export default function MyRecord(props: any) {
 
     return (
         <Wrapper colors={Colors.recordGradient}>
-            <Header navigation={props.navigation} />
-            <Content step={step} />
-            <WeekData startDate={dateInfo} weekStep={weekStep} />
+            <ImageBackground
+                source={require('../../../assets/recordBackground.png')}
+                style={{
+                    flex: 1,
+                }}
+            >
+                <Header navigation={props.navigation} />
+                <Content step={step} />
+                <WeekData startDate={dateInfo} weekStep={weekStep} />
+            </ImageBackground>
         </Wrapper>
     )
 }

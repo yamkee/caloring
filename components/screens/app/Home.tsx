@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { AppState, AppStateStatus, ImageBackground } from 'react-native'
+import { AppState, AppStateStatus, ImageBackground, Alert } from 'react-native'
 import { Pedometer } from 'expo-sensors'
 import { LinearGradient } from 'expo-linear-gradient'
 import SoundPlayer from 'react-native-sound-player'
@@ -109,7 +109,7 @@ export default function Home(props: any) {
             locations={locationHandler(false)}
         >
             <ImageBackground
-                source={require('../../../assets/twingkle2.gif')}
+                source={require('../../../assets/background-gif/backGif2.gif')}
                 style={{ width: '100%', height: '100%' }}
             >
                 <Header
@@ -127,12 +127,16 @@ export default function Home(props: any) {
                 </ImageWrapper>
                 <TodayStep />
                 <Button
-                    onPress={async () => {
+                    onLongPress={async () => {
                         const res = await updateExercising(
                             totalStep,
                             level,
                             totalCaloring
                         )
+                        console.log(res)
+                        Alert.alert('운동량 기록', 'Energy가 차오릅니다', [
+                            { text: 'ok' },
+                        ])
                     }}
                 >
                     <Text

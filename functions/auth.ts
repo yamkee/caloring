@@ -1,3 +1,4 @@
+import { SERVER_URL } from 'react-native-dotenv'
 type signUpData = {
     nickname: string
     password: string
@@ -10,7 +11,7 @@ type logInData = {
     password: string
 }
 export const signUp = async (data: signUpData) => {
-    const res = await fetch('https://d16nav0m28xkxy.cloudfront.net/signin', {
+    const res = await fetch(`${SERVER_URL}/signin`, {
         method: 'PUT',
         headers: {
             Accept: 'application/json',
@@ -37,7 +38,7 @@ export const signUp = async (data: signUpData) => {
 }
 
 export const autoLogin = async (userId: string) => {
-    const res = await fetch('https://d16nav0m28xkxy.cloudfront.net/autoLogin', {
+    const res = await fetch(`${SERVER_URL}/autoLogin`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
@@ -55,7 +56,7 @@ export const autoLogin = async (userId: string) => {
 }
 
 export const logIn = async (data: logInData) => {
-    const res = await fetch('https://d16nav0m28xkxy.cloudfront.net/login', {
+    const res = await fetch(`${SERVER_URL}/login`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
