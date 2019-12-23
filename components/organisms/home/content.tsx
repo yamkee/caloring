@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/native'
+import { useDispatch } from 'react-redux'
 
 import * as screen from '../../../constants/Dimensions'
 import Bubble from '../../molecules/speech-bubble/default-speech-bubble'
@@ -7,6 +8,8 @@ import IconCircleButton from '../../molecules/buttons/icon-circle-button'
 import FreindsIcon from '../../atoms/icons/friends'
 import NotifyIcon from '../../atoms/icons/notification'
 import dpHandler from '../../../constants/Dp'
+import { getAlarm } from '../../../functions/user'
+import * as AlarmActions from '../../../store/actions/alarm'
 
 type Bubble = {
     width: number
@@ -18,6 +21,7 @@ type Bubble = {
 }
 
 export default (props: any) => {
+    const dispatch = useDispatch()
     let BubbleStyle: Bubble
     BubbleStyle = {
         width: screen.width * 0.305,
@@ -27,6 +31,7 @@ export default (props: any) => {
         opacity: 0.4,
         bottom: screen.height * 0.016,
     }
+
     return (
         <Wrapper>
             <Bubble {...BubbleStyle} text="비" />
@@ -35,7 +40,9 @@ export default (props: any) => {
                     rad={screen.width * 0.05}
                     color="grey"
                     opacity={0.8}
-                    onPress={() => {
+                    onPress={async () => {
+                        const res = await getAlarm()
+                        dispatch(AlarmActions.saveAlarmData(res))
                         props.navigation.navigate('Notifications')
                     }}
                 >

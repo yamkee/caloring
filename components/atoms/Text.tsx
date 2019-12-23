@@ -12,6 +12,8 @@ interface TextProps {
 
 const fontSizeHandler = (level: number) => {
     switch (level) {
+        case 0:
+            return Dp(1.9)
         case 1:
             return Dp(3)
         case 2:

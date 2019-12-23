@@ -97,6 +97,10 @@ export default (props: any) => {
                                     'userId',
                                     userData.user_id.toString()
                                 )
+                                await AsyncStorage.setItem(
+                                    'date',
+                                    new Date().getDate().toString()
+                                )
                             } catch (error) {
                                 // Error saving data
                             }

@@ -1,60 +1,81 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components/native'
 
 import Text from '../../atoms/Text'
-import { getWeekStep } from '../../../functions/googleFit'
 import Graph from './graph'
 
-let steps = new Array()
+import { max, barWidth } from './graph'
+import dpHandler from '../../../constants/Dp'
 
 export default (props: any) => {
-    const [data, setData] = useState()
-    const [startYear, setStartYear] = useState()
-    const [startDate, setStartDate] = useState()
-    const [startMonth, setStartMonth] = useState()
-    const [year, setYear] = useState()
-    const [date, setDate] = useState()
-    const [month, setMonth] = useState()
-    const [st, setSt] = useState(false)
-    useEffect(() => {
-        getWeekStep(setData)
-    }, [])
+    const { startDate, weekStep } = props
+    const today = new Date()
+    if (!startDate) {
+        return <></>
+    } else {
+        return (
+            <Wrapper>
+                <Text color="black" level={4}>
+                    이번주 발자국
+                </Text>
 
-    useEffect(() => {
-        if (data) {
-            const length = data.length
-            const start = data[0].date.split('-')
-            setStartYear(start[0])
-            setStartMonth(start[1])
-            setStartDate(start[2])
-            const today = data[length - 1].date.split('-')
-            setYear(today[0])
-            setMonth(today[1])
-            setDate(today[2])
-            data.map((v, i) => {
-                steps[i] = v.value / 10000
-            })
-            setSt(true)
-        }
-    }, [data])
-
-    return (
-        <Wrapper>
-            <Text color="black" level={4}>
-                이번주 발자국
-            </Text>
-            {year ? (
-                <Text>{`${startYear}년 ${startMonth}월 ${startDate}일 - ${month}월 ${date}일`}</Text>
-            ) : (
-                <></>
-            )}
-            {st && <Graph step={steps} />}
-        </Wrapper>
-    )
+                <Text>{`${startDate[0]}년 ${startDate[1]}월 ${
+                    startDate[2]
+                }일 - ${today.getMonth() + 1}월 ${today.getDate()}일`}</Text>
+                <GraphContainer>
+                    <LabelYContainer>
+                        <LabelY font="roboto" level={1} height={1}>
+                            10000
+                        </LabelY>
+                        <LabelY font="roboto" level={1} height={0.8}>
+                            {` 8000`}
+                        </LabelY>
+                        <LabelY font="roboto" level={1} height={0.6}>
+                            {` 6000`}
+                        </LabelY>
+                        <LabelY font="roboto" level={1} height={0.4}>
+                            {` 4000`}
+                        </LabelY>
+                        <LabelY font="roboto" level={1} height={0.2}>
+                            {` 2000`}
+                        </LabelY>
+                        <LabelY font="roboto" level={1} height={0}>
+                            {` 0000`}
+                        </LabelY>
+                    </LabelYContainer>
+                    <Graph step={weekStep} />
+                </GraphContainer>
+            </Wrapper>
+        )
+    }
 }
 
 const Wrapper = styled.View({
     width: '100%',
-    height: '47%',
+    height: '49%',
     alignItems: 'center',
 })
+
+const GraphContainer = styled.View({
+    marginTop: dpHandler(2),
+    width: barWidth * 17,
+    height: max,
+    flexDirection: 'row',
+    paddingRight: dpHandler(3),
+})
+
+const LabelYContainer = styled.View({
+    width: barWidth * 2.5,
+    height: max,
+    justifyContent: 'flex-end',
+})
+
+const LabelY = styled(Text)<LabelYProps>(props => ({
+    position: 'absolute',
+    bottom: max * props.height - 5,
+    alignItems: 'flex-end',
+}))
+
+type LabelYProps = {
+    height: number
+}

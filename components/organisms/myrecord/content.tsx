@@ -1,22 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import styled from 'styled-components/native'
 
 import * as screen from '../../../constants/Dimensions'
 import Text from '../../atoms/Text'
 import dp from '../../../constants/Dp'
 import Colors from '../../../constants/Colors'
-import { getStep } from '../../../functions/googleFit'
 
 const Radius = (screen.width * 0.514) / 2
 
 export default (props: any) => {
     const today = new Date()
-    const [data, setData] = useState()
-
-    useEffect(() => {
-        getStep(setData)
-    }, [])
-
     return (
         <Wrapper>
             <Text color="black" level={4} weight={5}>{`${today.getMonth() +
@@ -26,7 +19,7 @@ export default (props: any) => {
                     오늘의 발자국
                 </Text>
                 <Text color="white" font="roboto" level={6} weight={4}>
-                    {data}
+                    {props.step}
                 </Text>
             </Circle>
         </Wrapper>
@@ -35,7 +28,7 @@ export default (props: any) => {
 
 const Wrapper = styled.View({
     width: '100%',
-    height: '42%',
+    height: '40%',
     alignItems: 'center',
 })
 

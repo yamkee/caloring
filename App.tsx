@@ -5,9 +5,11 @@ import ReduxThunk from 'redux-thunk'
 
 import Navigator from './navigators/MainNavigator'
 import userData from './store/reducers/userData'
+import alarm from './store/reducers/alarm'
 
 const rootReducer = combineReducers({
     userData: userData,
+    alarm: alarm,
 })
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk))

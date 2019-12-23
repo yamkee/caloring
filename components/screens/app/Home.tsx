@@ -5,9 +5,10 @@ import { LinearGradient } from 'expo-linear-gradient'
 import SoundPlayer from 'react-native-sound-player'
 import styled from 'styled-components/native'
 import { useSelector, useDispatch } from 'react-redux'
+import AsyncStorage from '@react-native-community/async-storage'
 
 import Text from '../../atoms/Text'
-import { getStep } from '../../../functions/googleFit'
+import { getStep, getWeekStep } from '../../../functions/googleFit'
 import { stopPlaying, soundPlay } from '../../../functions/soundPlay'
 import Header from '../../organisms/home/header'
 import * as screen from '../../../constants/Dimensions'
@@ -15,7 +16,11 @@ import ActionButton from '../../molecules/buttons/fab'
 import TreeImage from '../../molecules/tree-image'
 import TodayStep from '../../organisms/home/today-step'
 import Content from '../../organisms/home/content'
-import { updateExercising } from '../../../functions/exercising'
+import { updateExercising } from '../../../functions/user'
+import {
+    colorHandler,
+    locationHandler,
+} from '../../../functions/home-gradient-handler'
 
 let pedometerSubscription: any
 let musicSubscription: any
@@ -25,18 +30,21 @@ export default function Home(props: any) {
     const [step, setStep] = useState(0)
     const [pastStep, setPastStep] = useState(0)
     const [totalStep, setTotalStep] = useState(0)
+    const [weekStep, setWeekStep] = useState()
     const [time, setTime] = useState(0)
     const [totalCaloring, setTotalCaloring] = useState(
         useSelector((state: any) => state.userData.totalCaloring)
     )
-    const dispatch = useDispatch()
+
     const userData = useSelector((state: any) => state.userData)
     const { level } = userData
 
     useEffect(() => {
+        setRealTime()
         AppState.addEventListener('change', _handleAppStateChange)
         subscribe()
         getStep(setPastStep)
+        getWeekStep(setWeekStep)
         soundPlay()
         return function cleanup() {
             pedometerSubscription.remove()
@@ -48,6 +56,22 @@ export default function Home(props: any) {
     useEffect(() => {
         setTotalStep(pastStep + step)
     }, [step, pastStep])
+
+    const setRealTime = async () => {
+        try {
+            const value = await AsyncStorage.getItem('date')
+            if (new Date().getDate().toString() !== value) {
+                //fetch
+                //날짜 바뀌면 요청보내기
+                try {
+                    await AsyncStorage.setItem(
+                        'date',
+                        new Date().getDate().toString()
+                    )
+                } catch (err) {}
+            }
+        } catch (err) {}
+    }
 
     const subscribe = () => {
         pedometerSubscription = Pedometer.watchStepCount(result =>
@@ -78,11 +102,11 @@ export default function Home(props: any) {
 
     return (
         <LinearGradient
-            colors={['#62a9b2', '#b2bdbb', '#d1c5be', '#bfc2bd', '#8ebabb']}
+            colors={colorHandler(false)}
             style={{
                 flex: 1,
             }}
-            locations={[0, 0.34, 0.58, 0.77, 1]}
+            locations={locationHandler(false)}
         >
             <ImageBackground
                 source={require('../../../assets/twingkle2.gif')}
@@ -97,7 +121,7 @@ export default function Home(props: any) {
                     totalCaloring={totalCaloring}
                 />
                 <ImageWrapper>
-                    <TreeImage level={4}>
+                    <TreeImage level={level}>
                         <Content navigation={props.navigation} />
                     </TreeImage>
                 </ImageWrapper>
@@ -122,7 +146,11 @@ export default function Home(props: any) {
                         {totalStep}
                     </Text>
                 </Button>
-                <ActionButton navigation={props.navigation} />
+                <ActionButton
+                    navigation={props.navigation}
+                    step={totalStep}
+                    weekStep={weekStep}
+                />
             </ImageBackground>
         </LinearGradient>
     )
@@ -136,5 +164,6 @@ const ImageWrapper = styled.View({
 })
 const Button = styled.TouchableOpacity({
     alignSelf: 'center',
-    width: '20%',
+    width: '30%',
+    alignItems: 'center',
 })

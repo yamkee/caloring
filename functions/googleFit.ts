@@ -68,7 +68,7 @@ export const getWeekStep = (set: any) => {
 
     const options = {
         startDate: new Date(
-            new Date().setDate(new Date().getDate() - 6) - timezoneOffset
+            new Date().setDate(new Date().getDate() - 7) - timezoneOffset
         ).toISOString(),
         endDate: timezoneDate.toISOString(),
     }
@@ -77,9 +77,6 @@ export const getWeekStep = (set: any) => {
         if (!isError) {
             result.map(res => {
                 if (res.source === 'com.google.android.gms:estimated_steps') {
-                    console.log(options.startDate)
-                    console.log(options.endDate)
-                    console.log(res.steps)
                     set(res.steps)
                 }
             })

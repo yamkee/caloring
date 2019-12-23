@@ -29,7 +29,10 @@ export default (props: any) => {
             <ActionButton.Item
                 buttonColor={Colors.white}
                 onPress={() => {
-                    props.navigation.navigate('MyRecord')
+                    props.navigation.navigate('MyRecord', {
+                        step: props.step,
+                        weekStep: props.weekStep,
+                    })
                 }}
                 size={dp(17)}
             >

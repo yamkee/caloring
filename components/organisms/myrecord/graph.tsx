@@ -4,29 +4,29 @@ import { LinearGradient } from 'expo-linear-gradient'
 
 import * as screen from '../../../constants/Dimensions'
 import Colors from '../../../constants/Colors'
+import Text from '../../atoms/Text'
+import Test from '../../molecules/graph/bar'
 
-const max = screen.height * 0.196
-const barWidth = screen.width * 0.044
+export const max = screen.height * 0.196
+export const barWidth = screen.width * 0.044
 
 export default (props: any) => {
     const { step } = props
-
+    const date = new Date().getDate()
     if (!step) {
         return <></>
     } else {
         return (
             <Wrapper>
-                <Bar
-                    colors={Colors.gradient0}
-                    style={{ marginLeft: barWidth * 0.5 }}
-                    height={step[0]}
-                />
-                <Bar colors={Colors.gradient0} height={step[1]} />
-                <Bar colors={Colors.gradient0} height={step[2]} />
-                <Bar colors={Colors.gradient0} height={step[3]} />
-                <Bar colors={Colors.gradient0} height={step[4]} />
-                <Bar colors={Colors.gradient0} height={step[5]} />
-                <Bar colors={Colors.gradient0} height={step[6]} />
+                {step.map((v, i) => {
+                    return (
+                        <Test
+                            key={i}
+                            height={v}
+                            date={date - (step.length - 1 - i)}
+                        />
+                    )
+                })}
                 <Line height={0} />
                 <Line height={0.2} />
                 <Line height={0.4} />
@@ -47,7 +47,7 @@ const Wrapper = styled.View({
 
 const Bar = styled(LinearGradient)<LineType>(props => ({
     width: barWidth,
-    height: max * props.height,
+    height: (max * props.height) / 10000,
     marginRight: barWidth,
     zIndex: 100,
 }))

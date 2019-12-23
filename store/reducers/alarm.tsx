@@ -1,14 +1,12 @@
-import { SAVE_SUBS } from '../actions/subscriptions'
+import { SAVE_ALARM } from '../actions/alarm'
 
-const initialState = {
-    pedometer: null,
-}
+const initialState = {}
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case SAVE_SUBS:
+        case SAVE_ALARM:
             return {
-                pedometer: action.sub,
+                ...action.response,
             }
         default:
             return initialState

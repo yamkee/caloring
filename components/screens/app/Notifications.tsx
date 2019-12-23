@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react'
-import { View, Dimensions, PixelRatio } from 'react-native'
+import React from 'react'
+import styled from 'styled-components/native'
 
-import Button from '../../molecules/buttons/default-button'
-import Text from '../../atoms/Text'
+import Colors from '../../../constants/Colors'
+import Header from '../../organisms/notifications/header'
+import Content from '../../organisms/notifications/content'
 
 export default function Notifications(props: any) {
     return (
-        <View
-            style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
-        >
-            <Button
-                onPress={() => {
-                    props.navigation.navigate('Home')
-                }}
-                title="Home"
-            />
-        </View>
+        <Wrapper>
+            <Header navigation={props.navigation} />
+            <Content />
+        </Wrapper>
     )
 }
+
+const Wrapper = styled.View({
+    flex: 1,
+    backgroundColor: Colors.main,
+})
