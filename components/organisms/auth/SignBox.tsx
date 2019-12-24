@@ -122,8 +122,7 @@ export default function SignBox(props: any) {
                                     formState.values.nickname,
                                     userData.total_caloring,
                                     userData.level,
-                                    userData.exercising,
-                                    false
+                                    userData.exercising
                                 )
                             )
                             try {

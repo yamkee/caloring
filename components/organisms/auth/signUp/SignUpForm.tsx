@@ -55,10 +55,9 @@ export default (props: any) => {
                 dispatch(
                     userDataAction.saveData(
                         nickname,
-                        userData.total_caloring,
-                        userData.level,
-                        userData.exercising,
-                        false
+                        parseInt(userData.total_caloring),
+                        parseInt(userData.level),
+                        parseInt(userData.exercising)
                     )
                 )
                 try {

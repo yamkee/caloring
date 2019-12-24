@@ -6,12 +6,11 @@ export const saveData = (
     nickname: string,
     totalCaloring: number,
     level: number,
-    exercising: number,
-    penalty: boolean
+    exercising: number
 ) => {
     return {
         type: SAVE_USER_DATA,
-        userData: { nickname, totalCaloring, level, exercising, penalty },
+        userData: { nickname, totalCaloring, level, exercising },
     }
 }
 

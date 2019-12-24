@@ -12,6 +12,7 @@ export default (state = initialState, action: any) => {
     switch (action.type) {
         case SAVE_USER_DATA:
             return {
+                ...state,
                 ...action.userData,
             }
         case SAVE_PENALTY:

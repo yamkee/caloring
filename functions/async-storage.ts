@@ -1,12 +1,13 @@
 import AsyncStorage from '@react-native-community/async-storage'
 import { updatedTotal } from '../functions/user'
 
-export const setRealTime = async (set: any) => {
+export const setRealTime = async (set: any, setTodayData: any) => {
     try {
         const value = await AsyncStorage.getItem('date')
         if (new Date().getDate().toString() !== value) {
             const res = await updatedTotal()
-            if (res.total_caloring % 200 === 0) {
+            setTodayData(res)
+            if (parseInt(res.total_caloring) % 200 === 0) {
                 const yesterdayCaloring = await AsyncStorage.getItem('total')
                 if (
                     parseInt(yesterdayCaloring) > parseInt(res.total_caloring)

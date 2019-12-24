@@ -38,7 +38,7 @@ export default function Home(props: any) {
     const [totalCaloring, setTotalCaloring] = useState(
         useSelector((state: any) => state.userData.totalCaloring)
     )
-
+    const [todayData, setTodayData] = useState()
     const [penalty, setPenalty] = useState(false)
     const userData = useSelector((state: any) => state.userData)
     const { level, penalty: realPenalty } = userData
@@ -47,7 +47,7 @@ export default function Home(props: any) {
         if (pedometerSubscription) {
             pedometerSubscription.remove()
         }
-        setRealTime(setPenalty)
+        setRealTime(setPenalty, setTodayData)
         AppState.addEventListener('change', _handleAppStateChange)
         subscribe()
         getStep(setPastStep)
@@ -65,6 +65,18 @@ export default function Home(props: any) {
     useEffect(() => {
         setTotalStep(pastStep + step)
     }, [step, pastStep])
+    useEffect(() => {
+        if (todayData) {
+            dispatch(
+                userAction.saveData(
+                    todayData.name,
+                    parseInt(todayData.total_caloring),
+                    parseInt(todayData.level),
+                    parseInt(todayData.exercising)
+                )
+            )
+        }
+    }, [todayData])
 
     const subscribe = () => {
         pedometerSubscription = Pedometer.watchStepCount(result =>
@@ -100,8 +112,7 @@ export default function Home(props: any) {
                 userData.nickname,
                 parseInt(res.total_caloring),
                 parseInt(res.level),
-                parseInt(res.exercising),
-                false
+                parseInt(res.exercising)
             )
         )
         setTotalCaloring(parseInt(res.total_caloring))
