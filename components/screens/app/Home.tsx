@@ -42,7 +42,7 @@ export default function Home(props: any) {
     )
     const [penalty, setPenalty] = useState(false)
     const userData = useSelector((state: any) => state.userData)
-    const { level } = userData
+    const { level, penalty: realPenalty } = userData
 
     useEffect(() => {
         setRealTime(setPenalty)
@@ -57,6 +57,10 @@ export default function Home(props: any) {
             AppState.removeEventListener('change', _handleAppStateChange)
         }
     }, [])
+
+    useEffect(() => {
+        dispatch(userAction.savePenalty(penalty))
+    }, [penalty])
 
     useEffect(() => {
         setTotalStep(pastStep + step)
@@ -96,7 +100,8 @@ export default function Home(props: any) {
                 userData.nickname,
                 parseInt(res.total_caloring),
                 parseInt(res.level),
-                parseInt(res.exercising)
+                parseInt(res.exercising),
+                false
             )
         )
         // await updateAsyncStorage(res.total_caloring)
@@ -106,11 +111,11 @@ export default function Home(props: any) {
 
     return (
         <LinearGradient
-            colors={colorHandler(penalty)}
+            colors={colorHandler(realPenalty)}
             style={{
                 flex: 1,
             }}
-            locations={locationHandler(penalty)}
+            locations={locationHandler(realPenalty)}
         >
             <ImageBackground
                 source={require('../../../assets/background-gif/backGif.gif')}

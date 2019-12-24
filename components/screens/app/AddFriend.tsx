@@ -73,7 +73,13 @@ export default (props: any) => {
                                 Alert.alert(
                                     '친구가 추가되었습니다',
                                     '친구 목록에서 확인해주세요',
-                                    [{ text: 'ok' }]
+                                    [
+                                        {
+                                            text: 'ok',
+                                            onPress: () =>
+                                                props.navigation.goBack(),
+                                        },
+                                    ]
                                 )
                             }
                             setValue('')

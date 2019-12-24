@@ -32,7 +32,8 @@ export default function AuthLoading(props: any) {
                     res.name,
                     res.total_caloring,
                     res.level,
-                    res.exercising
+                    res.exercising,
+                    false
                 )
             )
             await googleFit()

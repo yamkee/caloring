@@ -6,7 +6,6 @@ const TOTAL = 'TOTAL'
 export const setRealTime = async (set: any) => {
     try {
         const value = await AsyncStorage.getItem('date')
-        console.log(value)
         if (new Date().getDate().toString() !== value) {
             const res = await updatedTotal()
             if (res.total_caloring % 200 === 0) {

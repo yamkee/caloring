@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/native'
-import { Alert, Modal, ScrollView, Image } from 'react-native'
+import { Alert, Modal, ScrollView, Image, RefreshControl } from 'react-native'
 import { useSelector } from 'react-redux'
 
 import dp from '../../../constants/Dp'
@@ -21,6 +21,15 @@ export default (props: any) => {
     const [friendNick, setFriendNick] = useState()
     const [friendId, setFriendId] = useState()
     const exercising = useSelector((state: any) => state.userData.exercising)
+    const [refreshing, setRefreshing] = useState(false)
+
+    const onRefresh = async () => {
+        setRefreshing(true)
+        await getData()
+        setTimeout(() => {
+            setRefreshing(false)
+        }, 1000)
+    }
 
     useEffect(() => {
         getData()
@@ -29,7 +38,6 @@ export default (props: any) => {
     const getData = async () => {
         const data = await fetchFriends()
         setRes(data)
-        console.log(data)
     }
     return (
         <Wrapper>
@@ -44,7 +52,14 @@ export default (props: any) => {
             >
                 친구 목록
             </Text>
-            <ScrollView>
+            <ScrollView
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
+            >
                 {res ? (
                     res.response.map((v, i) => (
                         <ListItem
@@ -104,7 +119,6 @@ export default (props: any) => {
                                     friendId,
                                     exercising
                                 )
-                                console.log(res)
                             }}
                             setVisible={(v: boolean) => {
                                 setVisible(v)

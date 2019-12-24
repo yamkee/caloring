@@ -21,41 +21,43 @@ type friendItemType = {
 export default (props: friendItemType) => {
     return (
         <Wrapper onPress={props.onPress} onLongPress={props.onLongPress}>
-            <ImageContainer>
-                <FriendIcon level={props.level} />
-            </ImageContainer>
-            <Content>
-                <FriendData>
-                    <Text
-                        font="roboto"
-                        style={{ marginBottom: '8.6%' }}
-                        level={1}
-                    >
-                        {props.nickname}
-                    </Text>
-                    <Text font="roboto" level={1} weight={1}>
-                        {LevelText(props.level)}
-                    </Text>
-                </FriendData>
-                <FriendData2>
-                    <Data
-                        title="TODAY"
-                        style={{ marginBottom: '5.4%' }}
-                        colors={Colors.todayGage}
-                        gage={props.todayGage}
-                    />
-                    <Data
-                        title="EXP"
-                        colors={Colors.expGage}
-                        gage={props.expGage}
-                    />
-                </FriendData2>
-            </Content>
+            <A>
+                <ImageContainer>
+                    <FriendIcon level={props.level} />
+                </ImageContainer>
+                <Content>
+                    <FriendData>
+                        <Text
+                            font="roboto"
+                            style={{ marginBottom: '8.6%' }}
+                            level={1}
+                        >
+                            {props.nickname}
+                        </Text>
+                        <Text font="roboto" level={1} weight={1}>
+                            {LevelText(props.level)}
+                        </Text>
+                    </FriendData>
+                    <FriendData2>
+                        <Data
+                            title="TODAY"
+                            style={{ marginBottom: '5.4%' }}
+                            colors={Colors.todayGage}
+                            gage={props.todayGage}
+                        />
+                        <Data
+                            title="EXP"
+                            colors={Colors.expGage}
+                            gage={props.expGage}
+                        />
+                    </FriendData2>
+                </Content>
+            </A>
         </Wrapper>
     )
 }
 
-const Wrapper = styled.TouchableOpacity({
+const A = styled.View({
     width: screen.width,
     height: screen.height * 0.145,
     borderBottomWidth: 1,
@@ -65,6 +67,8 @@ const Wrapper = styled.TouchableOpacity({
     flexDirection: 'row',
     justifyContent: 'space-between',
 })
+
+const Wrapper = styled.TouchableNativeFeedback({})
 
 const ImageContainer = styled.View({
     width: dp(15),

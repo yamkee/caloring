@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { FlatList } from 'react-native'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components/native'
 
@@ -9,14 +8,12 @@ import dp from '../../../constants/Dp'
 import Text from '../../atoms/Text'
 import ContentDate from './content-date'
 import { Penalty, Attack, AddFriend, DeleteFriend } from './content-event'
-import { ScrollView } from 'react-native-gesture-handler'
 
-export default () => {
+export default (props: any) => {
     const alarmData = useSelector((state: any) => state.alarm)
-    const [] = useState([])
     console.log(alarmData)
 
-    if (!alarmData) {
+    if (alarmData.response.length === 0) {
         return (
             <Wrapper>
                 <NoAlarm>
