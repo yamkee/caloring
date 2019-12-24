@@ -1,4 +1,4 @@
-package com.caloring.generated;
+package com.walkwith.generated;
 
 import java.util.Arrays;
 import java.util.List;
