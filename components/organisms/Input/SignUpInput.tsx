@@ -38,17 +38,16 @@ const formReducer = (state: FormState, action: ActionState) => {
 
             let updatedFormIsValid = true
             for (const key in updatedValidities) {
-                console.log(updatedValidities)
                 if (key === 'password2') {
                     if (updatedValues.password === updatedValues.password2) {
                         updatedValidities.password = true
                         updatedValidities.password2 = true
                     } else {
                         console.log('diff')
-                        updatedValidities.password = false
                         updatedValidities.password2 = false
                     }
                 }
+                console.log(updatedValidities)
                 updatedFormIsValid =
                     updatedFormIsValid && updatedValidities[key]
             }

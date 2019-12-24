@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import ReduxThunk from 'redux-thunk'
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 import Navigator from './navigators/MainNavigator'
 import userData from './store/reducers/userData'
@@ -12,7 +13,10 @@ const rootReducer = combineReducers({
     alarm: alarm,
 })
 
-const store = createStore(rootReducer, applyMiddleware(ReduxThunk))
+const store = createStore(
+    rootReducer,
+    composeWithDevTools(applyMiddleware(ReduxThunk))
+)
 
 const App: () => any = () => {
     return (

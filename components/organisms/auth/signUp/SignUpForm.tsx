@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/native'
 import { useDispatch } from 'react-redux'
-import { Alert } from 'react-native'
+import { Alert, Modal } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
 
 import * as screen from '../../../../constants/Dimensions'
@@ -17,6 +17,7 @@ import Checkbox from '../../../molecules/checkboxs/default-checkbox'
 import { googleFit } from '../../../../functions/googleFit'
 import { signUp } from '../../../../functions/auth'
 import * as userDataAction from '../../../../store/actions/userData'
+import TermsOfUse from './terms-of-use'
 
 const Wrapper = styled.View({
     width: screen.width,
@@ -33,7 +34,54 @@ export default (props: any) => {
     const [agree, setAgree] = useState(false)
     const [nickname, setNickname] = useState()
     const [password, setPassword] = useState()
+    const [modalVisible, setModalVisible] = useState(false)
     const dispatch = useDispatch()
+
+    const next = async () => {
+        if (agree && age && gender !== 2 && formValid) {
+            const userData = await signUp({
+                nickname,
+                password,
+                age,
+                gender,
+            })
+            if (userData.message) {
+                Alert.alert('닉네임중복', '다른 닉네임을 사용해주세요', [
+                    {
+                        text: 'OK',
+                    },
+                ])
+            } else {
+                dispatch(
+                    userDataAction.saveData(
+                        nickname,
+                        userData.total_caloring,
+                        userData.level,
+                        userData.exercising,
+                        false
+                    )
+                )
+                try {
+                    await AsyncStorage.setItem(
+                        'userId',
+                        userData.user_id.toString()
+                    )
+                    await AsyncStorage.setItem(
+                        'date',
+                        new Date().getDate().toString()
+                    )
+                } catch (error) {
+                    // Error saving data
+                }
+                await googleFit()
+                props.navigation.navigate('Home')
+            }
+        }
+    }
+
+    const termsOfUse = () => {
+        setModalVisible(true)
+    }
 
     return (
         <Wrapper>
@@ -56,7 +104,7 @@ export default (props: any) => {
             />
             <Button
                 title="이용약관보기"
-                onPress={() => {}}
+                onPress={termsOfUse}
                 textStyle={{ textDecorationLine: 'underline' }}
                 style={{
                     alignSelf: 'center',
@@ -65,50 +113,7 @@ export default (props: any) => {
             />
             <RoundButton
                 title="다음"
-                onPress={async () => {
-                    if (agree && age && gender !== 2 && formValid) {
-                        const userData = await signUp({
-                            nickname,
-                            password,
-                            age,
-                            gender,
-                        })
-                        if (userData.message === 'duplicate id') {
-                            Alert.alert(
-                                '닉네임중복',
-                                '다른 닉네임을 사용해주세요',
-                                [
-                                    {
-                                        text: 'OK',
-                                    },
-                                ]
-                            )
-                        } else {
-                            dispatch(
-                                userDataAction.saveData(
-                                    nickname,
-                                    userData.total_caloring,
-                                    userData.level,
-                                    userData.exercising
-                                )
-                            )
-                            try {
-                                await AsyncStorage.setItem(
-                                    'userId',
-                                    userData.user_id.toString()
-                                )
-                                await AsyncStorage.setItem(
-                                    'date',
-                                    new Date().getDate().toString()
-                                )
-                            } catch (error) {
-                                // Error saving data
-                            }
-                            await googleFit()
-                            props.navigation.navigate('Home')
-                        }
-                    }
-                }}
+                onPress={next}
                 textColor="white"
                 color={
                     agree && age && gender !== 2 && formValid
@@ -120,6 +125,13 @@ export default (props: any) => {
                 fontWeight={5}
                 style={{ alignSelf: 'center' }}
             />
+            <Modal
+                animationType="slide"
+                transparent={false}
+                visible={modalVisible}
+            >
+                <TermsOfUse setVisible={bool => setModalVisible(bool)} />
+            </Modal>
         </Wrapper>
     )
 }

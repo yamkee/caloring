@@ -7,7 +7,8 @@ import * as screen from '../../../constants/Dimensions'
 import dp from '../../../constants/Dp'
 import Text from '../../atoms/Text'
 import ContentDate from './content-date'
-import { Penalty, Attack, AddFriend, DeleteFriend } from './content-event'
+import Event from './content-event'
+import { ScrollView } from 'react-native-gesture-handler'
 
 export default (props: any) => {
     const alarmData = useSelector((state: any) => state.alarm)
@@ -24,96 +25,62 @@ export default (props: any) => {
     } else {
         return (
             <Wrapper>
-                {alarmData.response.map((v, i) => {
-                    if (i === 0) {
-                        return (
-                            <Content key={-i}>
-                                <ContentDate
-                                    key={i}
-                                    date={v.updateAt.split('-')}
-                                />
-                                {v.event === 0 ? (
-                                    <Penalty
-                                        key={v.event + v.name + i}
-                                        data={v.caloring}
-                                    />
-                                ) : v.event === 1 ? (
-                                    <AddFriend
-                                        key={v.event + v.name + i}
-                                        name={v.name}
-                                    />
-                                ) : v.evnet === 2 ? (
-                                    <Attack data={v.caloring} name={v.name} />
-                                ) : (
-                                    <DeleteFriend
-                                        key={v.event + v.name + i}
-                                        name={v.name}
-                                    />
-                                )}
-                            </Content>
-                        )
-                    } else {
-                        if (alarmData.response[i - 1].updateAt !== v.updateAt) {
+                <ScrollView
+                    contentContainerStyle={{
+                        paddingHorizontal: screen.width * 0.04,
+                        paddingBottom: screen.height * 0.05,
+                    }}
+                >
+                    {alarmData.response.map((v, i) => {
+                        if (i === 0) {
                             return (
                                 <Content key={-i}>
                                     <ContentDate
                                         key={i}
                                         date={v.updateAt.split('-')}
                                     />
-                                    {v.event === 0 ? (
-                                        <Penalty
-                                            key={v.event + v.name + i}
-                                            data={v.caloring}
-                                        />
-                                    ) : v.event === 1 ? (
-                                        <AddFriend
-                                            key={v.event + v.name + i}
-                                            name={v.name}
-                                        />
-                                    ) : v.event === 2 ? (
-                                        <Attack
-                                            key={v.event + v.name + i}
-                                            data={v.caloring}
-                                            name={v.name}
-                                        />
-                                    ) : (
-                                        <DeleteFriend
-                                            key={v.event + v.name + i}
-                                            name={v.name}
-                                        />
-                                    )}
+                                    <Event
+                                        key={v.name + v.event + i}
+                                        name={v.name}
+                                        event={v.event}
+                                        caloring={v.caloring}
+                                    />
                                 </Content>
                             )
                         } else {
-                            return (
-                                <Content key={-i}>
-                                    {v.event === 0 ? (
-                                        <Penalty
-                                            key={v.event + v.name + i}
-                                            data={v.caloring}
+                            if (
+                                alarmData.response[i - 1].updateAt !==
+                                v.updateAt
+                            ) {
+                                return (
+                                    <Content key={-i}>
+                                        <ContentDate
+                                            key={i}
+                                            date={v.updateAt.split('-')}
                                         />
-                                    ) : v.event === 1 ? (
-                                        <AddFriend
-                                            key={v.event + v.name + i}
+                                        <Event
+                                            key={v.name + v.event + i}
                                             name={v.name}
+                                            event={v.event}
+                                            caloring={v.caloring}
                                         />
-                                    ) : v.event === 2 ? (
-                                        <Attack
-                                            key={v.event + v.name + i}
-                                            data={v.caloring}
+                                    </Content>
+                                )
+                            } else {
+                                return (
+                                    <Content key={-i}>
+                                        <Event
+                                            key={v.name + v.event + i}
                                             name={v.name}
+                                            event={v.event}
+                                            caloring={v.caloring}
                                         />
-                                    ) : (
-                                        <DeleteFriend
-                                            key={v.event + v.name + i}
-                                            name={v.name}
-                                        />
-                                    )}
-                                </Content>
-                            )
+                                    </Content>
+                                )
+                            }
                         }
-                    }
-                })}
+                    })}
+                </ScrollView>
             </Wrapper>
         )
     }
@@ -125,7 +92,6 @@ const Wrapper = styled.View({
     backgroundColor: Colors.white,
     borderTopLeftRadius: dp(4.5),
     borderTopRightRadius: dp(4.5),
-    paddingHorizontal: screen.width * 0.04,
 })
 
 const NoAlarm = styled.View({
@@ -136,6 +102,7 @@ const NoAlarm = styled.View({
     marginHorizontal: screen.width * 0.04,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: screen.width * 0.04,
 })
 
 const Content = styled.View({})
