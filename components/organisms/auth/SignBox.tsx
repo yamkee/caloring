@@ -13,6 +13,8 @@ import { googleFit } from '../../../functions/googleFit'
 import { logIn } from '../../../functions/auth'
 import * as userDataAction from '../../../store/actions/userData'
 
+const TOTAL = 'TOTAL'
+
 interface FormState {
     values: {
         nickname: string
@@ -128,13 +130,16 @@ export default function SignBox(props: any) {
                                     'userId',
                                     userData.user_id.toString()
                                 )
+
                                 await AsyncStorage.setItem(
                                     'date',
                                     new Date().getDate().toString()
                                 )
-                            } catch (error) {
-                                // Error saving data
-                            }
+                                // await AsyncStorage.setItem(
+                                //     `total`,
+                                //     userData.total_caloring
+                                // )
+                            } catch (error) {}
                             await googleFit()
                             props.navigation.navigate('Home')
                         }

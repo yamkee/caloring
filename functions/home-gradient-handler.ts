@@ -16,9 +16,9 @@ export const colorHandler = (penalty: boolean) => {
             return Colors.pinkGradient
         } else if (hour >= 20 && hour <= 22) {
             return Colors.pupleGradient
-        } else if (hour >= 23 && hour <= 4) {
+        } else if (hour >= 23 || hour <= 4) {
             return Colors.blueSerapeGradient
-        }
+        } else return Colors.lightOrangeGradient
     }
 }
 
@@ -32,13 +32,15 @@ export const locationHandler = (penalty: boolean) => {
         } else if (hour >= 8 && hour <= 10) {
             return Location.orangeGradient
         } else if (hour >= 11 && hour <= 16) {
-            return [0, 1]
+            return Location.blueGradient
         } else if (hour >= 17 && hour <= 19) {
             return Location.pinkGradient
         } else if (hour >= 20 && hour <= 22) {
             return Location.pupleGradient
-        } else if (hour >= 23 && hour <= 4) {
+        } else if (hour >= 23 || hour <= 4) {
             return Location.blueSerapeGradient
+        } else {
+            return [0, 1]
         }
     }
 }

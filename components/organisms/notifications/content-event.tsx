@@ -10,7 +10,10 @@ export const Penalty = (props: any) => {
             <Content font="roboto">
                 목표치를 달성하지 못하여 패널티를 받았습니다.
             </Content>
-            <Number color={Colors.main}>{`-${props.data}`}</Number>
+            <Number
+                color={Colors.main}
+                font="roboto"
+            >{`-${props.data}`}</Number>
         </Wrapper>
     )
 }
@@ -21,7 +24,10 @@ export const Attack = (props: any) => {
             <Content font="roboto">
                 {`${props.name}님이 공격하였습니다.`}
             </Content>
-            <Number color={Colors.main}>{`-${props.data}`}</Number>
+            <Number
+                color={Colors.main}
+                font="roboto"
+            >{`-${props.data}`}</Number>
         </Wrapper>
     )
 }
@@ -49,6 +55,7 @@ const Wrapper = styled.View({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginTop: '4%',
 })
 
 const Content = styled(Text)({})

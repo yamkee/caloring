@@ -47,21 +47,21 @@ export const getAlarm = async () => {
     return userData
 }
 
-// export const updatedTotal = async () => {
-//     const userId = await AsyncStorage.getItem('userId')
-//     const res = await fetch(`${SERVER_URL}/alarm/show`, {
-//         method: 'POST',
-//         headers: {
-//             Accept: 'application/json',
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({
-//             user_id: parseInt(userId),
-//         }),
-//     })
-//     if (!res.ok) {
-//         console.log('response error')
-//     }
-//     const userData = await res.json()
-//     return userData
-// }
+export const updatedTotal = async () => {
+    const userId = await AsyncStorage.getItem('userId')
+    const res = await fetch(`${SERVER_URL}/init/today/penalty`, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            user_id: parseInt(userId),
+        }),
+    })
+    if (!res.ok) {
+        console.log('response error')
+    }
+    const userData = await res.json()
+    return userData
+}

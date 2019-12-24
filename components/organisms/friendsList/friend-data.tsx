@@ -4,7 +4,6 @@ import { LinearGradient } from 'expo-linear-gradient'
 
 import * as screen from '../../../constants/Dimensions'
 import Text from '../../atoms/Text'
-import Colors from '../../../constants/Colors'
 
 export default (props: any) => {
     return (
@@ -35,7 +34,7 @@ const Graph = styled.View({
 })
 
 const Bar = styled(LinearGradient)<BarType>(props => ({
-    width: (screen.width * 0.35 * props.gage) / 100,
+    width: screen.width * 0.35 * props.gage,
     height: screen.height * 0.016,
     borderRadius: (screen.height * 0.016) / 2,
 }))

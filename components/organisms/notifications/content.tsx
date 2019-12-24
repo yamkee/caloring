@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { ScrollView } from 'react-native'
+import React, { useState } from 'react'
+import { FlatList } from 'react-native'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components/native'
 
@@ -9,10 +9,11 @@ import dp from '../../../constants/Dp'
 import Text from '../../atoms/Text'
 import ContentDate from './content-date'
 import { Penalty, Attack, AddFriend, DeleteFriend } from './content-event'
+import { ScrollView } from 'react-native-gesture-handler'
 
-export default (props: any) => {
+export default () => {
     const alarmData = useSelector((state: any) => state.alarm)
-    const [time, setTime] = useState([])
+    const [] = useState([])
     console.log(alarmData)
 
     if (!alarmData) {
@@ -26,9 +27,36 @@ export default (props: any) => {
     } else {
         return (
             <Wrapper>
-                <ScrollView>
-                    {alarmData.response.map((v, i) => {
-                        if (i === 0) {
+                {alarmData.response.map((v, i) => {
+                    if (i === 0) {
+                        return (
+                            <Content key={-i}>
+                                <ContentDate
+                                    key={i}
+                                    date={v.updateAt.split('-')}
+                                />
+                                {v.event === 0 ? (
+                                    <Penalty
+                                        key={v.event + v.name + i}
+                                        data={v.caloring}
+                                    />
+                                ) : v.event === 1 ? (
+                                    <AddFriend
+                                        key={v.event + v.name + i}
+                                        name={v.name}
+                                    />
+                                ) : v.evnet === 2 ? (
+                                    <Attack data={v.caloring} name={v.name} />
+                                ) : (
+                                    <DeleteFriend
+                                        key={v.event + v.name + i}
+                                        name={v.name}
+                                    />
+                                )}
+                            </Content>
+                        )
+                    } else {
+                        if (alarmData.response[i - 1].updateAt !== v.updateAt) {
                             return (
                                 <Content key={-i}>
                                     <ContentDate
@@ -41,13 +69,14 @@ export default (props: any) => {
                                             data={v.caloring}
                                         />
                                     ) : v.event === 1 ? (
-                                        <Attack
-                                            data={v.caloring}
-                                            name={v.name}
-                                        />
-                                    ) : v.evnet === 2 ? (
                                         <AddFriend
                                             key={v.event + v.name + i}
+                                            name={v.name}
+                                        />
+                                    ) : v.event === 2 ? (
+                                        <Attack
+                                            key={v.event + v.name + i}
+                                            data={v.caloring}
                                             name={v.name}
                                         />
                                     ) : (
@@ -59,71 +88,35 @@ export default (props: any) => {
                                 </Content>
                             )
                         } else {
-                            if (
-                                alarmData.response[i - 1].updateAt !==
-                                v.updateAt
-                            ) {
-                                return (
-                                    <Content key={-i}>
-                                        <ContentDate
-                                            key={i}
-                                            date={v.updateAt.split('-')}
+                            return (
+                                <Content key={-i}>
+                                    {v.event === 0 ? (
+                                        <Penalty
+                                            key={v.event + v.name + i}
+                                            data={v.caloring}
                                         />
-                                        {v.event === 0 ? (
-                                            <Penalty
-                                                key={v.event + v.name + i}
-                                                data={v.caloring}
-                                            />
-                                        ) : v.event === 1 ? (
-                                            <Attack
-                                                key={v.event + v.name + i}
-                                                data={v.caloring}
-                                                name={v.name}
-                                            />
-                                        ) : v.event === 2 ? (
-                                            <AddFriend
-                                                key={v.event + v.name + i}
-                                                name={v.name}
-                                            />
-                                        ) : (
-                                            <DeleteFriend
-                                                key={v.event + v.name + i}
-                                                name={v.name}
-                                            />
-                                        )}
-                                    </Content>
-                                )
-                            } else {
-                                return (
-                                    <Content key={-i}>
-                                        {v.event === 0 ? (
-                                            <Penalty
-                                                key={v.event + v.name + i}
-                                                data={v.caloring}
-                                            />
-                                        ) : v.event === 1 ? (
-                                            <Attack
-                                                key={v.event + v.name + i}
-                                                data={v.caloring}
-                                                name={v.name}
-                                            />
-                                        ) : v.event === 2 ? (
-                                            <AddFriend
-                                                key={v.event + v.name + i}
-                                                name={v.name}
-                                            />
-                                        ) : (
-                                            <DeleteFriend
-                                                key={v.event + v.name + i}
-                                                name={v.name}
-                                            />
-                                        )}
-                                    </Content>
-                                )
-                            }
+                                    ) : v.event === 1 ? (
+                                        <AddFriend
+                                            key={v.event + v.name + i}
+                                            name={v.name}
+                                        />
+                                    ) : v.event === 2 ? (
+                                        <Attack
+                                            key={v.event + v.name + i}
+                                            data={v.caloring}
+                                            name={v.name}
+                                        />
+                                    ) : (
+                                        <DeleteFriend
+                                            key={v.event + v.name + i}
+                                            name={v.name}
+                                        />
+                                    )}
+                                </Content>
+                            )
                         }
-                    })}
-                </ScrollView>
+                    }
+                })}
             </Wrapper>
         )
     }

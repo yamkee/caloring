@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/native'
 import { Alert, Modal, ScrollView, Image } from 'react-native'
+import { useSelector } from 'react-redux'
 
 import dp from '../../../constants/Dp'
 import * as screen from '../../../constants/Dimensions'
@@ -18,8 +19,8 @@ export default (props: any) => {
     const [visible, setVisible] = useState(false)
     const [res, setRes] = useState()
     const [friendNick, setFriendNick] = useState()
-    const [friendToday, setFriendToday] = useState()
     const [friendId, setFriendId] = useState()
+    const exercising = useSelector((state: any) => state.userData.exercising)
 
     useEffect(() => {
         getData()
@@ -50,12 +51,11 @@ export default (props: any) => {
                             key={i}
                             nickname={v.name}
                             level={v.level}
-                            todayGage={v.exercising}
-                            expGage={v.total_caloring}
+                            todayGage={v.exercising / 100}
+                            expGage={(v.total_caloring % 200) / 200}
                             onPress={() => {
                                 setVisible(true)
                                 setFriendNick(v.name)
-                                setFriendToday(v.exercising)
                                 setFriendId(v.user_id)
                             }}
                             onLongPress={() => {
@@ -98,7 +98,7 @@ export default (props: any) => {
                         </Circle>
                         <AttackContent
                             nick={friendNick}
-                            penalty={friendToday}
+                            penalty={exercising}
                             attack={async exercising => {
                                 const res = await attackFriend(
                                     friendId,

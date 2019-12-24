@@ -28,4 +28,5 @@ const Wrapper = styled.View({
     borderBottomWidth: 1,
     paddingBottom: '2%',
     paddingTop: '3%',
+    marginTop: '4%',
 })

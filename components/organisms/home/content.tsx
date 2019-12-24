@@ -10,6 +10,7 @@ import NotifyIcon from '../../atoms/icons/notification'
 import dpHandler from '../../../constants/Dp'
 import { getAlarm } from '../../../functions/user'
 import * as AlarmActions from '../../../store/actions/alarm'
+import Colors from '../../../constants/Colors'
 
 type Bubble = {
     width: number
@@ -38,7 +39,7 @@ export default (props: any) => {
             <ButtonContainer>
                 <IconCircleButton
                     rad={screen.width * 0.05}
-                    color="grey"
+                    color={Colors.blackCat}
                     opacity={0.8}
                     onPress={async () => {
                         const res = await getAlarm()
@@ -54,7 +55,7 @@ export default (props: any) => {
                 </IconCircleButton>
                 <IconCircleButton
                     rad={screen.width * 0.05}
-                    color="grey"
+                    color={Colors.blackCat}
                     opacity={0.8}
                     onPress={() => {
                         props.navigation.navigate('FriendList')

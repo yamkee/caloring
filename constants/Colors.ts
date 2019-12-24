@@ -28,4 +28,5 @@ export default {
     recordGradient: ['#f9bea8', '#ffe79a'],
     recordBorder: '#FCB78B',
     recordCircle: '#FCDDBB',
+    blackCat: '#D1D0CE',
 }

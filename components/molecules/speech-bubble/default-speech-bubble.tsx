@@ -46,7 +46,7 @@ interface bub {
 
 const Bubble = styled.View<bub>(props => ({
     position: 'relative',
-    // top: -0.1,
+    top: -0.1,
     width: props.size,
     height: props.size,
     borderWidth: props.size,

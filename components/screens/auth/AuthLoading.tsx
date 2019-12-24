@@ -44,30 +44,34 @@ export default function AuthLoading(props: any) {
 
     return (
         <LinearGradient
-            style={{ flex: 1, alignItems: 'center' }}
+            style={{ flex: 1 }}
             colors={Colors.orangeGradient}
             locations={Location.orangeGradient}
         >
-            <LogoImage source={require('../../../assets/logotext.png')} />
-            <LoadingImage
-                source={require('../../../assets/loading/loading.png')}
-            />
-            <Leaf
-                width={21.489}
-                height={29.706}
-                fill="white"
-                style={{ marginTop: screen.height * 0.05 }}
-            />
-            <Text
-                color="white"
-                font="roboto"
-                style={{ marginTop: screen.height * 0.02 }}
+            <Background
+                source={require('../../../assets/background-gif/backGif2.gif')}
             >
-                We're loading data
-            </Text>
-            <Text color="white" font="roboto">
-                please wait...
-            </Text>
+                <LogoImage source={require('../../../assets/logotext.png')} />
+                <LoadingImage
+                    source={require('../../../assets/loading/loading.png')}
+                />
+                <Leaf
+                    width={21.489}
+                    height={29.706}
+                    fill="white"
+                    style={{ marginTop: screen.height * 0.05 }}
+                />
+                <Text
+                    color="white"
+                    font="roboto"
+                    style={{ marginTop: screen.height * 0.02 }}
+                >
+                    We're loading data
+                </Text>
+                <Text color="white" font="roboto">
+                    please wait...
+                </Text>
+            </Background>
         </LinearGradient>
     )
 }
@@ -79,4 +83,8 @@ const LogoImage = styled.Image({
 const LoadingImage = styled.Image({
     width: screen.width,
     height: (306 * screen.width) / 360,
+})
+const Background = styled.ImageBackground({
+    flex: 1,
+    alignItems: 'center',
 })

@@ -21,26 +21,31 @@ import {
     colorHandler,
     locationHandler,
 } from '../../../functions/home-gradient-handler'
+import * as userAction from '../../../store/actions/userData'
+import {
+    setRealTime,
+    updateAsyncStorage,
+} from '../../../functions/async-storage'
 
 let pedometerSubscription: any
 let musicSubscription: any
 
 export default function Home(props: any) {
+    const dispatch = useDispatch()
     const [appState, setAppState] = useState(AppState.currentState)
     const [step, setStep] = useState(0)
     const [pastStep, setPastStep] = useState(0)
     const [totalStep, setTotalStep] = useState(0)
     const [weekStep, setWeekStep] = useState()
-    const [time, setTime] = useState(0)
     const [totalCaloring, setTotalCaloring] = useState(
         useSelector((state: any) => state.userData.totalCaloring)
     )
-
+    const [penalty, setPenalty] = useState(false)
     const userData = useSelector((state: any) => state.userData)
     const { level } = userData
 
     useEffect(() => {
-        setRealTime()
+        setRealTime(setPenalty)
         AppState.addEventListener('change', _handleAppStateChange)
         subscribe()
         getStep(setPastStep)
@@ -56,22 +61,6 @@ export default function Home(props: any) {
     useEffect(() => {
         setTotalStep(pastStep + step)
     }, [step, pastStep])
-
-    const setRealTime = async () => {
-        try {
-            const value = await AsyncStorage.getItem('date')
-            if (new Date().getDate().toString() !== value) {
-                //fetch
-                //날짜 바뀌면 요청보내기
-                try {
-                    await AsyncStorage.setItem(
-                        'date',
-                        new Date().getDate().toString()
-                    )
-                } catch (err) {}
-            }
-        } catch (err) {}
-    }
 
     const subscribe = () => {
         pedometerSubscription = Pedometer.watchStepCount(result =>
@@ -100,17 +89,32 @@ export default function Home(props: any) {
         setAppState(nextAppState)
     }
 
+    const updateTodayExercising = async () => {
+        const res = await updateExercising(totalStep, level, totalCaloring)
+        dispatch(
+            userAction.saveData(
+                userData.nickname,
+                parseInt(res.total_caloring),
+                parseInt(res.level),
+                parseInt(res.exercising)
+            )
+        )
+        // await updateAsyncStorage(res.total_caloring)
+
+        Alert.alert('운동량 기록', 'Energy가 차오릅니다', [{ text: 'ok' }])
+    }
+
     return (
         <LinearGradient
-            colors={colorHandler(false)}
+            colors={colorHandler(penalty)}
             style={{
                 flex: 1,
             }}
-            locations={locationHandler(false)}
+            locations={locationHandler(penalty)}
         >
             <ImageBackground
-                source={require('../../../assets/background-gif/backGif2.gif')}
-                style={{ width: '100%', height: '100%' }}
+                source={require('../../../assets/background-gif/backGif.gif')}
+                style={{ flex: 1 }}
             >
                 <Header
                     energyGage={
@@ -126,19 +130,7 @@ export default function Home(props: any) {
                     </TreeImage>
                 </ImageWrapper>
                 <TodayStep />
-                <Button
-                    onLongPress={async () => {
-                        const res = await updateExercising(
-                            totalStep,
-                            level,
-                            totalCaloring
-                        )
-                        console.log(res)
-                        Alert.alert('운동량 기록', 'Energy가 차오릅니다', [
-                            { text: 'ok' },
-                        ])
-                    }}
-                >
+                <Button onLongPress={updateTodayExercising}>
                     <Text
                         level={6}
                         style={{
