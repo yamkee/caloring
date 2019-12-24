@@ -4,24 +4,19 @@ import styled from 'styled-components/native'
 import Text from '../../atoms/Text'
 
 type bubbleContent = {
-    width: number
-    height: number
     borderRadius: number
     color: string
 }
 
 export default (props: any) => {
-    const { width, height, borderRadius, color, opacity, bottom, text } = props
+    const { borderRadius, color, opacity, bottom, text } = props
 
     return (
         <Wrapper opacity={opacity}>
-            <Content
-                width={width}
-                height={height}
-                borderRadius={borderRadius}
-                color={color}
-            >
-                <Text>{text}</Text>
+            <Content borderRadius={borderRadius} color={color}>
+                <Text font="roboto" color="black">
+                    {text}
+                </Text>
             </Content>
             <Bubble size={bottom} />
         </Wrapper>
@@ -33,12 +28,11 @@ const Wrapper = styled.View((props: { opacity?: number }) => ({
 }))
 
 const Content = styled.View((props: bubbleContent) => ({
-    width: props.width,
-    height: props.height,
     borderRadius: props.borderRadius,
     backgroundColor: props.color,
     alignItems: 'center',
-    justifyContent: 'center',
+    paddingHorizontal: '4%',
+    paddingVertical: '5%',
 }))
 interface bub {
     size: number

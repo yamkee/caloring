@@ -27,10 +27,9 @@ import {
     updateAsyncStorage,
 } from '../../../functions/async-storage'
 
-let pedometerSubscription: any
-let musicSubscription: any
-
 export default function Home(props: any) {
+    let pedometerSubscription: any
+    let musicSubscription: any
     const dispatch = useDispatch()
     const [appState, setAppState] = useState(AppState.currentState)
     const [step, setStep] = useState(0)
@@ -40,11 +39,15 @@ export default function Home(props: any) {
     const [totalCaloring, setTotalCaloring] = useState(
         useSelector((state: any) => state.userData.totalCaloring)
     )
+
     const [penalty, setPenalty] = useState(false)
     const userData = useSelector((state: any) => state.userData)
     const { level, penalty: realPenalty } = userData
 
     useEffect(() => {
+        if (pedometerSubscription) {
+            pedometerSubscription.remove()
+        }
         setRealTime(setPenalty)
         AppState.addEventListener('change', _handleAppStateChange)
         subscribe()
@@ -52,8 +55,9 @@ export default function Home(props: any) {
         getWeekStep(setWeekStep)
         soundPlay()
         return function cleanup() {
-            pedometerSubscription.remove()
-            musicSubscription.remove()
+            console.log('unsubscribe all subscriptions')
+            // pedometerSubscription.remove()
+            // musicSubscription.remove()
             AppState.removeEventListener('change', _handleAppStateChange)
         }
     }, [])
@@ -82,6 +86,7 @@ export default function Home(props: any) {
 
     const _handleAppStateChange = (nextAppState: AppStateStatus) => {
         if (nextAppState === 'background') {
+            console.log('Im Background')
             stopPlaying()
             pedometerSubscription.remove()
             musicSubscription.remove()
@@ -104,6 +109,7 @@ export default function Home(props: any) {
                 false
             )
         )
+        setTotalCaloring(parseInt(res.total_caloring))
         // await updateAsyncStorage(res.total_caloring)
 
         Alert.alert('운동량 기록', 'Energy가 차오릅니다', [{ text: 'ok' }])

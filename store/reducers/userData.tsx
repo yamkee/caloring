@@ -20,6 +20,8 @@ export default (state = initialState, action: any) => {
                 penalty: action.penalty,
             }
         default:
-            return initialState
+            return {
+                ...state,
+            }
     }
 }

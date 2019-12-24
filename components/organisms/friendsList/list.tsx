@@ -97,7 +97,7 @@ export default (props: any) => {
                     <></>
                 )}
             </ScrollView>
-            <Modal transparent={true} visible={visible}>
+            <Modal transparent={true} visible={visible} animationType="fade">
                 <AttackWrapper>
                     <Blank
                         onPress={() => {

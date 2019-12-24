@@ -57,7 +57,7 @@ const Wrapper = styled.View({
 })
 
 const GraphContainer = styled.View({
-    marginTop: dpHandler(2),
+    marginTop: dpHandler(6),
     width: barWidth * 17,
     height: max,
     flexDirection: 'row',

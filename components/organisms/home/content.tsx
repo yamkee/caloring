@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components/native'
 import { useDispatch } from 'react-redux'
 
@@ -11,10 +11,9 @@ import dpHandler from '../../../constants/Dp'
 import { getAlarm } from '../../../functions/user'
 import * as AlarmActions from '../../../store/actions/alarm'
 import Colors from '../../../constants/Colors'
+import bubbleText from '../../../constants/speech-bubble-text'
 
 type Bubble = {
-    width: number
-    height: number
     borderRadius: number
     color: string
     opacity?: number
@@ -25,17 +24,14 @@ export default (props: any) => {
     const dispatch = useDispatch()
     let BubbleStyle: Bubble
     BubbleStyle = {
-        width: screen.width * 0.305,
-        height: screen.height * 0.058,
         borderRadius: (screen.height * 0.058) / 2,
         color: 'white',
         opacity: 0.4,
         bottom: screen.height * 0.016,
     }
-
     return (
         <Wrapper>
-            <Bubble {...BubbleStyle} text="비" />
+            <Bubble {...BubbleStyle} text={bubbleText()} />
             <ButtonContainer>
                 <IconCircleButton
                     rad={screen.width * 0.05}

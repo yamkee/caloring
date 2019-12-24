@@ -1,12 +1,19 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
 import styled from 'styled-components/native'
+import { Animated } from 'react-native'
 
 import * as screen from '../../constants/Dimensions'
 import Text from '../atoms/Text'
 import Colors from '../../constants/Colors'
 
 export default (props: any) => {
+    const [per] = useState(new Animated.Value(0))
+
+    useEffect(() => {
+        Animated.timing(per, { toValue: props.gage, duration: 1000 }).start()
+    }, [])
+
     return (
         <Wrapper>
             <Label>
@@ -24,12 +31,21 @@ export default (props: any) => {
             </Label>
 
             <Gage>
-                <State
-                    colors={Colors.totalGradient}
-                    start={[0, 0]}
-                    end={[1, 0]}
-                    width={props.gage}
-                />
+                <Animated.View
+                    style={{
+                        width: per,
+                        height: screen.height * 0.017,
+                        marginHorizontal: screen.width * 0.008,
+                        marginVertical: screen.height * 0.005,
+                        borderRadius: (screen.height * 0.017) / 2,
+                    }}
+                >
+                    <State
+                        colors={Colors.totalGradient}
+                        start={[0, 0]}
+                        end={[1, 0]}
+                    />
+                </Animated.View>
             </Gage>
         </Wrapper>
     )
@@ -52,11 +68,9 @@ const Gage = styled.View({
     borderRadius: (screen.height * 0.027) / 2,
 })
 
-const State = styled(LinearGradient)<stateProps>(props => ({
-    width: props.width,
-    height: screen.height * 0.017,
-    marginHorizontal: screen.width * 0.008,
-    marginVertical: screen.height * 0.005,
+const State = styled(LinearGradient)(props => ({
+    width: '100%',
+    height: '100%',
     borderRadius: (screen.height * 0.017) / 2,
 }))
 
