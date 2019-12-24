@@ -70,6 +70,10 @@ export default (props: any) => {
                         'date',
                         new Date().getDate().toString()
                     )
+                    await AsyncStorage.setItem(
+                        `total`,
+                        userData.total_caloring.toString()
+                    )
                 } catch (error) {
                     // Error saving data
                 }

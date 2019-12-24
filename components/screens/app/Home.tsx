@@ -5,7 +5,6 @@ import { LinearGradient } from 'expo-linear-gradient'
 import SoundPlayer from 'react-native-sound-player'
 import styled from 'styled-components/native'
 import { useSelector, useDispatch } from 'react-redux'
-import AsyncStorage from '@react-native-community/async-storage'
 
 import Text from '../../atoms/Text'
 import { getStep, getWeekStep } from '../../../functions/googleFit'
@@ -55,9 +54,6 @@ export default function Home(props: any) {
         getWeekStep(setWeekStep)
         soundPlay()
         return function cleanup() {
-            console.log('unsubscribe all subscriptions')
-            // pedometerSubscription.remove()
-            // musicSubscription.remove()
             AppState.removeEventListener('change', _handleAppStateChange)
         }
     }, [])
@@ -86,7 +82,6 @@ export default function Home(props: any) {
 
     const _handleAppStateChange = (nextAppState: AppStateStatus) => {
         if (nextAppState === 'background') {
-            console.log('Im Background')
             stopPlaying()
             pedometerSubscription.remove()
             musicSubscription.remove()
@@ -110,7 +105,7 @@ export default function Home(props: any) {
             )
         )
         setTotalCaloring(parseInt(res.total_caloring))
-        // await updateAsyncStorage(res.total_caloring)
+        await updateAsyncStorage(res.total_caloring)
 
         Alert.alert('운동량 기록', 'Energy가 차오릅니다', [{ text: 'ok' }])
     }

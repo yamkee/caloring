@@ -136,10 +136,10 @@ export default function SignBox(props: any) {
                                     'date',
                                     new Date().getDate().toString()
                                 )
-                                // await AsyncStorage.setItem(
-                                //     `total`,
-                                //     userData.total_caloring
-                                // )
+                                await AsyncStorage.setItem(
+                                    `total`,
+                                    userData.total_caloring.toString()
+                                )
                             } catch (error) {}
                             await googleFit()
                             props.navigation.navigate('Home')

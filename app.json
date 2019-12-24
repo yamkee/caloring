@@ -1,17 +1,14 @@
 {
-  "name": "caloring",
-  "displayName": "caloring",
-  "expo": {
-    "name": "caloring",
-    "slug": "expo-template-bare",
-    "privacy": "unlisted",
-    "sdkVersion": "35.0.0",
-    "version": "1.0.0",
-    "entryPoint": "node_modules/expo/AppEntry.js",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ]
-  }
+    "name": "WalkWith",
+    "displayName": "WalkWith",
+    "expo": {
+        "name": "WalkWith",
+        "slug": "expo-template-bare",
+        "privacy": "unlisted",
+        "sdkVersion": "35.0.0",
+        "version": "1.0.0",
+        "entryPoint": "node_modules/expo/AppEntry.js",
+        "platforms": ["ios", "android", "web"],
+        "orientation": "portrait"
+    }
 }

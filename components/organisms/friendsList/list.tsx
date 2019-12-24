@@ -119,6 +119,22 @@ export default (props: any) => {
                                     friendId,
                                     exercising
                                 )
+                                console.log(res)
+                                if (
+                                    res.message === 'warning : already attack'
+                                ) {
+                                    Alert.alert(
+                                        '공격 실패',
+                                        '하루에 한번 공격할 수 있습니다',
+                                        [{ text: 'ok' }]
+                                    )
+                                } else {
+                                    Alert.alert(
+                                        '공격 성공',
+                                        `${friendNick}님의 성장 경험치가 ${exercising}%만큼 감소합니다.`,
+                                        [{ text: 'ok' }]
+                                    )
+                                }
                             }}
                             setVisible={(v: boolean) => {
                                 setVisible(v)
