@@ -89,12 +89,12 @@ apply from: "../../node_modules/react-native/react.gradle"
  * Upload all the APKs to the Play Store and people will download
  * the correct one based on the CPU architecture of their device.
  */
-def enableSeparateBuildPerCPUArchitecture = false
+def enableSeparateBuildPerCPUArchitecture = true
 
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
  */
-def enableProguardInReleaseBuilds = false
+def enableProguardInReleaseBuilds = true
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -127,6 +127,7 @@ android {
     }
     buildTypes {
         release {
+            shrinkResources enableProguardInReleaseBuilds
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             signingConfig signingConfigs.release
@@ -155,12 +156,8 @@ dependencies {
     implementation project(':react-native-svg')
     implementation project(':react-native-google-fit')
     implementation project(':react-native-sound-player')
-     // If your app supports Android versions before Ice Cream Sandwich (API level 14)
      implementation 'com.facebook.fresco:fresco:1.10.0'
-
-  // For animated GIF support
   implementation 'com.facebook.fresco:animated-gif:1.10.0'
-
     implementation project(':@react-native-community_async-storage')
     implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
 implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha02'

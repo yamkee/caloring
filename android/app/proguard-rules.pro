@@ -22,8 +22,34 @@
   public static <fields>;
   public *;
 }
+
+-keep class org.unimodules.** { *;}
+-keep class okio.** {*;}
+-keep class com.swmansion.** {*;}
+-keep class com.google.android.gms.** {*;}
+-keep class com.facebook.** {*;}
+-keep class com.bumptech.** {*;}
+-keep class expo.modules.** {*;}
+-keep class io.nlopez.** {*;}
+-keep class org.unimodules.** {*;}
+-keep class org.apache** {*;}
+
+-keep class expo.loaders.provider.AppLoaderProvider$Callback
+-keep class org.unimodules.core.errors.CodedException
+-keep class com.google.android.gms.location.LocationSettingsResponse
+-keep class com.horcrux.svg.** {*;}
+
+-keep class javax.annotation.** {*;}
+-keep class bolts.** {*;}
+-keep class com.reactnative.googlefit.** {*;}
+
+-dontnote org.apache.commons.codec.**
+-dontwarn io.nlopez.smartlocation.rx.**
 -dontwarn android.support.v4.**,org.slf4j.**,com.google.android.gms.**
 
 -keep class com.facebook.imagepipeline.animated.factory.AnimatedFactoryImpl {
   public AnimatedFactoryImpl(com.facebook.imagepipeline.bitmaps.PlatformBitmapFactory, com.facebook.imagepipeline.core.ExecutorSupplier);
 }
+
+-dontwarn okio.**
+-dontwarn okhttp3.**
