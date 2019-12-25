@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/native'
-import { Alert, Modal, ScrollView, Image, RefreshControl } from 'react-native'
+import {
+    Alert,
+    Modal,
+    ScrollView,
+    Image,
+    RefreshControl,
+    ActivityIndicator,
+} from 'react-native'
 import { useSelector } from 'react-redux'
 
 import dp from '../../../constants/Dp'
@@ -39,6 +46,35 @@ export default (props: any) => {
         const data = await fetchFriends()
         setRes(data)
     }
+
+    const deleteFriendHandler = user_id => {
+        Alert.alert('친구 삭제', '친구를 삭제하시겠습니까?', [
+            {
+                text: 'ok',
+                onPress: async () => {
+                    const res = await deleteFriend(parseInt(user_id))
+                    getData()
+                },
+            },
+            { text: 'cancel' },
+        ])
+    }
+
+    const attackHandler = async (exercising: number) => {
+        const res = await attackFriend(friendId, exercising)
+        if (res.message === 'warning : already attack') {
+            Alert.alert('공격 실패', '하루에 한번 공격할 수 있습니다', [
+                { text: 'ok' },
+            ])
+        } else {
+            Alert.alert(
+                '공격 성공',
+                `${friendNick}님의 성장 경험치가 ${exercising}%만큼 감소합니다.`,
+                [{ text: 'ok' }]
+            )
+        }
+    }
+
     return (
         <Wrapper>
             <Text
@@ -74,27 +110,14 @@ export default (props: any) => {
                                 setFriendId(v.user_id)
                             }}
                             onLongPress={() => {
-                                Alert.alert(
-                                    '친구 삭제',
-                                    '친구를 삭제하시겠습니까?',
-                                    [
-                                        {
-                                            text: 'ok',
-                                            onPress: async () => {
-                                                const res = await deleteFriend(
-                                                    parseInt(v.user_id)
-                                                )
-                                                getData()
-                                            },
-                                        },
-                                        { text: 'cancel' },
-                                    ]
-                                )
+                                deleteFriendHandler(v.user_id)
                             }}
                         />
                     ))
                 ) : (
-                    <></>
+                    <Loading>
+                        <ActivityIndicator size="large" color={Colors.main} />
+                    </Loading>
                 )}
             </ScrollView>
             <Modal transparent={true} visible={visible} animationType="fade">
@@ -114,28 +137,7 @@ export default (props: any) => {
                         <AttackContent
                             nick={friendNick}
                             penalty={exercising}
-                            attack={async exercising => {
-                                const res = await attackFriend(
-                                    friendId,
-                                    exercising
-                                )
-                                console.log(res)
-                                if (
-                                    res.message === 'warning : already attack'
-                                ) {
-                                    Alert.alert(
-                                        '공격 실패',
-                                        '하루에 한번 공격할 수 있습니다',
-                                        [{ text: 'ok' }]
-                                    )
-                                } else {
-                                    Alert.alert(
-                                        '공격 성공',
-                                        `${friendNick}님의 성장 경험치가 ${exercising}%만큼 감소합니다.`,
-                                        [{ text: 'ok' }]
-                                    )
-                                }
-                            }}
+                            attack={attackHandler}
                             setVisible={(v: boolean) => {
                                 setVisible(v)
                             }}
@@ -180,4 +182,11 @@ const Circle = styled.View({
     height: dp(24),
     borderRadius: dp(12),
     alignSelf: 'center',
+})
+
+const Loading = styled.View({
+    width: screen.width,
+    height: screen.height * 0.6,
+    justifyContent: 'center',
+    alignItems: 'center',
 })

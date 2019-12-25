@@ -120,9 +120,14 @@ export default function SignBox(props: any) {
                             mainDispatch(
                                 userDataAction.saveData(
                                     formState.values.nickname,
-                                    userData.total_caloring,
-                                    userData.level,
-                                    userData.exercising
+                                    parseInt(userData.total_caloring),
+                                    parseInt(userData.level),
+                                    parseInt(userData.exercising)
+                                )
+                            )
+                            mainDispatch(
+                                userDataAction.saveAttackedCaloring(
+                                    parseInt(userData.attacked_caloring)
                                 )
                             )
                             try {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { AppState, AppStateStatus, ImageBackground, Alert } from 'react-native'
+import { AppState, AppStateStatus, Alert } from 'react-native'
 import { Pedometer } from 'expo-sensors'
 import { LinearGradient } from 'expo-linear-gradient'
 import SoundPlayer from 'react-native-sound-player'
@@ -25,6 +25,7 @@ import {
     setRealTime,
     updateAsyncStorage,
 } from '../../../functions/async-storage'
+import ImageBackground from '../../molecules/image/image-background'
 
 export default function Home(props: any) {
     let pedometerSubscription: any
@@ -65,6 +66,7 @@ export default function Home(props: any) {
     useEffect(() => {
         setTotalStep(pastStep + step)
     }, [step, pastStep])
+
     useEffect(() => {
         if (todayData) {
             dispatch(
@@ -115,6 +117,10 @@ export default function Home(props: any) {
                 parseInt(res.exercising)
             )
         )
+        dispatch(userAction.savePenalty(false))
+        dispatch(
+            userAction.saveAttackedCaloring(parseInt(res.attacked_caloring))
+        )
         setTotalCaloring(parseInt(res.total_caloring))
         await updateAsyncStorage(res.total_caloring)
 
@@ -129,10 +135,7 @@ export default function Home(props: any) {
             }}
             locations={locationHandler(realPenalty)}
         >
-            <ImageBackground
-                source={require('../../../assets/background-gif/backGif.gif')}
-                style={{ flex: 1 }}
-            >
+            <ImageBackground penalty={realPenalty}>
                 <Header
                     energyGage={
                         screen.width * 0.895 * ((totalCaloring % 200) / 200)

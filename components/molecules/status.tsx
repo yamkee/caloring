@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
 import styled from 'styled-components/native'
-import { Animated } from 'react-native'
+import { Animated, ShadowPropTypesIOS } from 'react-native'
 
 import * as screen from '../../constants/Dimensions'
 import Text from '../atoms/Text'
 import Colors from '../../constants/Colors'
+import { useSelector } from 'react-redux'
+
+const max = screen.width * 0.895
 
 export default (props: any) => {
     const [per] = useState(new Animated.Value(0))
+    const attacked = useSelector(
+        (state: any) => state.userData.attackedCaloring
+    )
+    const total = useSelector((state: any) => state.userData.totalCaloring)
 
     useEffect(() => {
         Animated.timing(per, { toValue: props.gage, duration: 1000 }).start()
@@ -40,11 +47,22 @@ export default (props: any) => {
                         borderRadius: (screen.height * 0.017) / 2,
                     }}
                 >
-                    <State
-                        colors={Colors.totalGradient}
-                        start={[0, 0]}
-                        end={[1, 0]}
-                    />
+                    <StateContainer>
+                        <State
+                            colors={Colors.totalGradient}
+                            start={[0, 0]}
+                            end={[1, 0]}
+                            attack={parseInt(attacked)}
+                            total={parseInt(total)}
+                        />
+                        <Attack
+                            colors={Colors.penaltyGage}
+                            start={[0, 0]}
+                            end={[1, 0]}
+                            attack={parseInt(attacked)}
+                            total={parseInt(total)}
+                        />
+                    </StateContainer>
                 </Animated.View>
             </Gage>
         </Wrapper>
@@ -68,12 +86,53 @@ const Gage = styled.View({
     borderRadius: (screen.height * 0.027) / 2,
 })
 
-const State = styled(LinearGradient)(props => ({
+const State = styled(LinearGradient)<stateProps>(props => ({
+    width: widthHandler(props.attack, props.total),
+    height: '100%',
+    borderTopLeftRadius: (screen.height * 0.017) / 2,
+    borderBottomLeftRadius: (screen.height * 0.017) / 2,
+    borderRadius: props.attack > 0 ? 0 : (screen.height * 0.017) / 2,
+}))
+
+const Attack = styled(LinearGradient)<stateProps>(props => ({
+    width: attackWidthHandler(props.attack, props.total),
+    height: '100%',
+    borderTopRightRadius: (screen.height * 0.017) / 2,
+    borderBottomRightRadius: (screen.height * 0.017) / 2,
+    borderRadius:
+        props.attack >= props.total % 200 ? (screen.height * 0.017) / 2 : 0,
+}))
+
+const StateContainer = styled.View({
     width: '100%',
     height: '100%',
     borderRadius: (screen.height * 0.017) / 2,
-}))
+    flexDirection: 'row',
+})
+
+const attackWidthHandler = (attack, total) => {
+    const energy = total % 200
+    console.log(attack, total)
+    if (energy <= attack) {
+        return '100%'
+    } else {
+        const gage = (attack / energy) * 100
+        console.log(gage)
+        return `${gage}%`
+    }
+}
+
+const widthHandler = (attack, total) => {
+    const energy = total % 200
+    if (energy <= attack) {
+        return '0%'
+    } else {
+        const gage = (1 - attack / energy) * 100
+        return `${gage}%`
+    }
+}
 
 interface stateProps {
-    width: number
+    attack: number
+    total: number
 }

@@ -29,4 +29,5 @@ export default {
     recordBorder: '#FCB78B',
     recordCircle: '#FCDDBB',
     blackCat: '#D1D0CE',
+    penaltyGage: ['#C091FF', '#C091FF'],
 }

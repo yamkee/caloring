@@ -17,6 +17,7 @@ export default function AuthLoading(props: any) {
     const dispatch = useDispatch()
 
     useEffect(() => {
+        AsyncStorage.removeItem('userId')
         setTimeout(() => {
             tokenCheck()
         }, 1500)
@@ -32,6 +33,11 @@ export default function AuthLoading(props: any) {
                     parseInt(res.total_caloring),
                     parseInt(res.level),
                     parseInt(res.exercising)
+                )
+            )
+            dispatch(
+                userDataAction.saveAttackedCaloring(
+                    parseInt(res.attacked_caloring)
                 )
             )
             await googleFit()

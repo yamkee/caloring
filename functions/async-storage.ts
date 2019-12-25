@@ -4,7 +4,7 @@ import { updatedTotal } from '../functions/user'
 export const setRealTime = async (set: any, setTodayData: any) => {
     try {
         const value = await AsyncStorage.getItem('date')
-        if (new Date().getDate().toString() !== value) {
+        if (new Date().getDate() !== parseInt(value)) {
             const res = await updatedTotal()
             setTodayData(res)
             if (parseInt(res.total_caloring) % 200 === 0) {
@@ -22,7 +22,7 @@ export const setRealTime = async (set: any, setTodayData: any) => {
                 )
             } catch (err) {}
         } else {
-            console.log('date not change')
+            console.log('date not change', value)
         }
     } catch (err) {}
 }

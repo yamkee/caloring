@@ -1,6 +1,17 @@
 import { PermissionsAndroid } from 'react-native'
 import GoogleFit, { Scopes } from 'react-native-google-fit'
 
+const timezoneOffset = new Date().getTimezoneOffset() * 60000
+const timezoneDate = new Date(Date.now() - timezoneOffset)
+
+const options = {
+    startDate: new Date(
+        new Date(new Date().setDate(new Date().getDate() - 8)).setHours(16) -
+            timezoneOffset
+    ).toISOString(),
+    endDate: timezoneDate.toISOString(),
+}
+
 export const googleFit = async () => {
     try {
         const granted = await PermissionsAndroid.request(
@@ -36,15 +47,6 @@ export const googleFit = async () => {
 }
 
 export const getStep = (set: any) => {
-    const timezoneOffset = new Date().getTimezoneOffset() * 60000
-    const timezoneDate = new Date(Date.now() - timezoneOffset)
-
-    const options = {
-        startDate: new Date(
-            new Date().setDate(new Date().getDate() - 3) - timezoneOffset
-        ).toISOString(),
-        endDate: timezoneDate.toISOString(),
-    }
     GoogleFit.getDailyStepCountSamples(options, (isError, result) => {
         if (!isError) {
             result.map(res => {
@@ -70,23 +72,9 @@ export const getStep = (set: any) => {
 }
 
 export const getWeekStep = (set: any) => {
-    const timezoneOffset = new Date().getTimezoneOffset() * 60000
-    const timezoneDate = new Date(Date.now() - timezoneOffset)
-
-    const options = {
-        startDate: new Date(
-            new Date(new Date().setDate(new Date().getDate() - 8)).setHours(
-                16
-            ) - timezoneOffset
-        ).toISOString(),
-        endDate: timezoneDate.toISOString(),
-    }
-
     GoogleFit.getDailyStepCountSamples(options, (isError, result) => {
         if (!isError) {
             result.map(res => {
-                console.log(options)
-                console.log(res.steps)
                 if (res.source === 'com.google.android.gms:estimated_steps') {
                     set(res.steps)
                 }
