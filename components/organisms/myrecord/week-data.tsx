@@ -10,6 +10,28 @@ import dpHandler from '../../../constants/Dp'
 export default (props: any) => {
     const { startDate, weekStep } = props
     const today = new Date()
+
+    const dateHandler = () => {
+        if (
+            new Date(new Date().setDate(today.getDate() - 6)).getDate() !==
+            parseInt(startDate[2])
+        ) {
+            return new Date(new Date().setDate(today.getDate() - 1)).getDate()
+        } else {
+            return today.getDate()
+        }
+    }
+    const monthHandler = () => {
+        if (
+            new Date(new Date().setDate(today.getDate() - 6)).getDate() !==
+            parseInt(startDate[2])
+        ) {
+            return new Date(new Date().setDate(today.getDate() - 1)).getMonth()
+        } else {
+            return today.getMonth()
+        }
+    }
+
     if (!startDate) {
         return <></>
     } else {
@@ -21,7 +43,7 @@ export default (props: any) => {
 
                 <Text>{`${startDate[0]}년 ${startDate[1]}월 ${
                     startDate[2]
-                }일 - ${today.getMonth() + 1}월 ${today.getDate()}일`}</Text>
+                }일 - ${monthHandler() + 1}월 ${dateHandler()}일`}</Text>
                 <GraphContainer>
                     <LabelYContainer>
                         <LabelY font="roboto" level={1} height={1}>
@@ -43,7 +65,7 @@ export default (props: any) => {
                             {` 0000`}
                         </LabelY>
                     </LabelYContainer>
-                    <Graph step={weekStep} />
+                    <Graph step={weekStep} startDate={startDate[2]} />
                 </GraphContainer>
             </Wrapper>
         )

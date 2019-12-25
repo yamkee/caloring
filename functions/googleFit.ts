@@ -52,7 +52,14 @@ export const getStep = (set: any) => {
                     const ldx = res.steps.length
                     if (ldx === 0) {
                     } else {
-                        set(res.steps[ldx - 1].value)
+                        if (
+                            parseInt(res.steps[ldx - 1].date.split('-')[2]) ===
+                            new Date().getDate()
+                        ) {
+                            set(res.steps[ldx - 1].value)
+                        } else {
+                            set(0)
+                        }
                     }
                 }
             })
@@ -68,7 +75,9 @@ export const getWeekStep = (set: any) => {
 
     const options = {
         startDate: new Date(
-            new Date().setDate(new Date().getDate() - 7) - timezoneOffset
+            new Date(new Date().setDate(new Date().getDate() - 8)).setHours(
+                16
+            ) - timezoneOffset
         ).toISOString(),
         endDate: timezoneDate.toISOString(),
     }
@@ -76,6 +85,8 @@ export const getWeekStep = (set: any) => {
     GoogleFit.getDailyStepCountSamples(options, (isError, result) => {
         if (!isError) {
             result.map(res => {
+                console.log(options)
+                console.log(res.steps)
                 if (res.source === 'com.google.android.gms:estimated_steps') {
                     set(res.steps)
                 }

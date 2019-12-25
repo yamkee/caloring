@@ -8,8 +8,20 @@ export const max = screen.height * 0.196
 export const barWidth = screen.width * 0.044
 
 export default (props: any) => {
-    const { step } = props
-    const date = new Date().getDate()
+    const { step, startDate } = props
+    const today = new Date().getDate()
+
+    const dateHandler = (length: number, index: number) => {
+        if (startDate !== today - 6) {
+            return new Date(
+                new Date().setDate(today - (length - index - 1))
+            ).getDate()
+        } else {
+            return new Date(
+                new Date().setDate(today - (length - index))
+            ).getDate()
+        }
+    }
 
     if (!step) {
         return <></>
@@ -21,7 +33,7 @@ export default (props: any) => {
                         <Test
                             key={i}
                             height={v}
-                            date={date - (step.length - 1 - i)}
+                            date={dateHandler(step.length, i)}
                         />
                     )
                 })}
