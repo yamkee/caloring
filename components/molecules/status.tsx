@@ -19,7 +19,7 @@ export default (props: any) => {
 
     useEffect(() => {
         Animated.timing(per, { toValue: props.gage, duration: 1000 }).start()
-    }, [])
+    }, [props.gage])
 
     return (
         <Wrapper>

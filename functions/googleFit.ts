@@ -31,6 +31,7 @@ export const googleFit = async () => {
     } catch (err) {
         console.warn(err)
     }
+
     const options = {
         scopes: [
             Scopes.FITNESS_ACTIVITY_READ_WRITE,
@@ -38,7 +39,13 @@ export const googleFit = async () => {
             Scopes.FITNESS_BODY_READ_WRITE,
         ],
     }
+
     const authResult = await GoogleFit.authorize(options)
+    if (authResult.success) {
+        console.log('success')
+    } else {
+        console.log('denied')
+    }
     if (authResult.success) {
         GoogleFit.startRecording(callback => {
             // Process data from Google Fit Recording API (no google fit app needed)
@@ -53,6 +60,7 @@ export const getStep = (set: any) => {
                 if (res.source === 'com.google.android.gms:estimated_steps') {
                     const ldx = res.steps.length
                     if (ldx === 0) {
+                        set(0)
                     } else {
                         if (
                             parseInt(res.steps[ldx - 1].date.split('-')[2]) ===
